@@ -85,6 +85,8 @@ class SearchElm:
         self.pat = ""
         self.type = ""
         self.year = 0
+        self.month = []
+        self.date_str = []
         self.combine = {}
 
     def __str__(self):
@@ -98,37 +100,13 @@ class SearchElm:
         for ch in pat:
             self.pat += ch
 
-    def addMonth(self):
-        pass
+    def setDateStr(self):
+        for m in self.month:
+            ds = str(self.year) + '-' + str(m)
+            self.date_str.append(ds)
 
 
-def searchPattern(pat_lst, liu_nian_must, liu_nian_zhi, birth_zhi, da_yun_zhi):
-    if liu_nian_must:
-        target_pat = None
-        for pat in pat_lst:
-            if liu_nian_zhi in pat:
-                target_pat = pat.copy()
-                break
-        if target_pat is None:
-            return False
-        target_pat.remove(liu_nian_zhi)
-        birth_zhi.append(da_yun_zhi)
-        if set(target_pat).issubset(set(birth_zhi)):
-            return True
-        else:
-            return False
-    else:
-        tmp = birth_zhi.copy()
-        tmp.append(da_yun_zhi)
-        tmp.append(liu_nian_zhi)
-        for pat in pat_lst:
-            if set(pat).issubset(set(tmp)):
-                if set(pat) & set(birth_zhi):
-                    return True
-        return False
-
-
-def search(pat_lst, zhi_dict, search_type, year):
+def searchPattern(pat_lst, zhi_dict, search_type, year):
     target_pat = None
     for pat in pat_lst:
         if zhi_dict['流年'] in pat:
@@ -235,16 +213,12 @@ class RadarFigure(FigureCanvasQTAgg):
             self.axes.text(a, b, b, ha='center', va='bottom', fontsize=8)
 
 
-def dataCut(dates, jinmu_scores, shuihuo_scores):
-    max_index = len(dates)
-    for i in range(len(dates)):
-        if dates[i].year > 2099:
-            max_index = i
-            break
-    dates = dates[0: max_index]
-    jinmu_scores = jinmu_scores[0: max_index]
-    shuihuo_scores = shuihuo_scores[0: max_index]
-    return dates, jinmu_scores, shuihuo_scores
+def ping_fang_he(a_scores, b_scores):
+    pfh = []
+    for i in range(len(a_scores)):
+        s = math.sqrt(a_scores[i] ** 2 + b_scores[i] ** 2)
+        pfh.append(s)
+    return pfh
 
 
 class LineFigure(FigureCanvasQTAgg):
@@ -266,11 +240,11 @@ class LineFigure(FigureCanvasQTAgg):
         self.figs.canvas.mpl_connect('button_release_event', self.onMouseRelease)
         self.figs.canvas.mpl_connect('motion_notify_event', self.onMouseMove)
 
-    def drawLine(self, dates, jinmu_scores, shuihuo_scores, spec_data, nyjm=None, nysh=None):
+    def drawLine(self, dates, jinmu_scores, shuihuo_scores, spec_data):
         dates = [datetime.strptime(d, '%Y-%m').date() for d in dates]
         self.axes.cla()
         self.axes.xaxis.set_major_formatter(mdate.DateFormatter('%Y-%m'))
-        pfh = self.ping_fang_he(jinmu_scores, shuihuo_scores)
+        pfh = ping_fang_he(jinmu_scores, shuihuo_scores)
         self.axes.plot(dates, shuihuo_scores, label='水火')
         self.axes.plot(dates, jinmu_scores, label='金木')
         self.axes.plot(dates, pfh, label='综合能量')
@@ -286,23 +260,15 @@ class LineFigure(FigureCanvasQTAgg):
             dates = []
             for year in spec_data[key]:
                 elm = spec_data[key][year]
-                for i in range(12):
-                    d = str(elm.year) + "-" + str(i + 1)
+                for d in elm.date_str:
                     dates.append(datetime.strptime(d, '%Y-%m'))
                     points.append(weightSum())
             if key == "三合":
-                self.axes.scatter(x=dates, y=points, s=100, marker='o', label='三合')
+                self.axes.scatter(x=dates, y=points, s=70, marker='o', label='三合')
             elif key == "反拱":
-                self.axes.scatter(x=dates, y=points, s=100, marker='^', label='反拱')
+                self.axes.scatter(x=dates, y=points, s=70, marker='^', label='反拱')
             elif key == "对冲":
                 self.axes.scatter(x=dates, y=points, s=100, marker='1', label='对冲')
-
-    def ping_fang_he(self, jinmu_scores, shuihuo_scores):
-        pfh = []
-        for i in range(len(jinmu_scores)):
-            s = math.sqrt(jinmu_scores[i] ** 2 + shuihuo_scores[i] ** 2)
-            pfh.append(s)
-        return pfh
 
     def onMousePress(self, event):
         self.press_id = event.button
@@ -464,15 +430,30 @@ class BirthInfo:
                 year = nian.getYear()
                 liu_nian_zhi = getZhi(nian.getGanZhi())
                 zhi_dict["流年"] = liu_nian_zhi
-                san_he = search(SAN_HE, zhi_dict, "三合", year)
-                fan_gong = search(FAN_GONG, zhi_dict, "反拱", year)
-                dui_chong = search(DUI_CHONG, zhi_dict, "对冲", year)
+                san_he = searchPattern(SAN_HE, zhi_dict, "三合", year)
+                fan_gong = searchPattern(FAN_GONG, zhi_dict, "反拱", year)
+                dui_chong = searchPattern(DUI_CHONG, zhi_dict, "对冲", year)
+
+                liu_yue = nian.getLiuYue()
+                for yue in liu_yue:
+                    yue_zhi = getZhi(yue.getGanZhi())
+                    if yue_zhi == liu_nian_zhi:
+                        yue_index = yue.getIndex() + 1
+                        if san_he:
+                            san_he.month.append(yue_index)
+                        if fan_gong:
+                            fan_gong.month.append(yue_index)
+                        if dui_chong:
+                            dui_chong.month.append(yue_index)
 
                 if san_he:
+                    san_he.setDateStr()
                     self.san_he[year] = san_he
                 if fan_gong:
+                    fan_gong.setDateStr()
                     self.fan_gong[year] = fan_gong
                 if dui_chong:
+                    dui_chong.setDateStr()
                     self.dui_chong[year] = dui_chong
 
     def getDaYunGanZhi(self, year, month):
@@ -504,8 +485,6 @@ class BirthInfo:
         #   出生的score只有1组,大运的score是9组,流年的score是90组,流月的score是90*12=1080组
         #   但事实上，其实每个流年的流月干支是一样的，理论上而言，score是12组
         birth_scores = calculateElmScore(self.getDateGanZhi())
-        nyjm = []
-        nysh = []
         birth_gan_zhi = self.getDateGanZhi()
         birth_zhi = []
         for key in birth_gan_zhi:
@@ -525,11 +504,9 @@ class BirthInfo:
                 liu_yue = nian.getLiuYue()
                 for yue in liu_yue:
                     scores = {'金': 0, '木': 0, '水': 0, '火': 0}
-                    # tmp_scores = {'金': 0, '木': 0, '水': 0, '火': 0}  # 单独算
                     this_yue = yue.getIndex() + 1
                     yue_zhi = getZhi(yue.getGanZhi())
                     zhi_dict = {'大运': yun_zhi, '流年': nian_zhi, '流月': yue_zhi}
-                    # tmp_dict = {'流年': nian_zhi, '流月': yue_zhi}  # 单独算
                     one_date = "%d-%d" % (this_nian, this_yue)
                     dates.append(one_date)
                     for key in zhi_dict:  # 计算大运、流年、流月分数
@@ -537,16 +514,6 @@ class BirthInfo:
                             val = energy_dict[zhi_dict[key]]
                             for elm in val:
                                 scores[elm] = float('%.2f' % (scores[elm] + val[elm] * score_weights[key]))
-
-                    # for key in tmp_dict:  # 单独算
-                    #     if tmp_dict[key] != '':
-                    #         val = energy_dict[tmp_dict[key]]
-                    #         for elm in val:
-                    #             tmp_scores[elm] = float('%.2f' % (tmp_scores[elm] + val[elm] * score_weights[key]))
-                    # jm = tmp_scores['木'] - tmp_scores['金']
-                    # sh = tmp_scores['火'] - tmp_scores['水']
-                    # nyjm.append(jm)
-                    # nysh.append(sh)
 
                     for key in scores:
                         scores[key] += birth_scores[key]
