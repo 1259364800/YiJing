@@ -1,0 +1,1289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1351</width>
+    <height>713</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>万年历</string>
+  </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QHBoxLayout" name="horizontalLayout_7" stretch="3,2">
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <item>
+     <widget class="QWidget" name="widget_8" native="true">
+      <layout class="QVBoxLayout" name="verticalLayout_6">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QWidget" name="widget_10" native="true">
+         <layout class="QHBoxLayout" name="horizontalLayout_8" stretch="1,1">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QWidget" name="formWidget" native="true">
+            <layout class="QVBoxLayout" name="verticalLayout">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="sizeConstraint">
+              <enum>QLayout::SetMinimumSize</enum>
+             </property>
+             <item>
+              <widget class="QWidget" name="widget_7" native="true">
+               <layout class="QHBoxLayout" name="horizontalLayout_6">
+                <item>
+                 <widget class="QPushButton" name="btn_reset">
+                  <property name="text">
+                   <string>重置</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="btn_birth">
+                  <property name="text">
+                   <string>原局</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <widget class="QWidget" name="widget" native="true">
+               <layout class="QHBoxLayout" name="horizontalLayout">
+                <item>
+                 <widget class="QLabel" name="label">
+                  <property name="font">
+                   <font>
+                    <pointsize>12</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>手机</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLineEdit" name="line_phone">
+                  <property name="font">
+                   <font>
+                    <pointsize>12</pointsize>
+                   </font>
+                  </property>
+                  <property name="echoMode">
+                   <enum>QLineEdit::Normal</enum>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_2">
+                  <property name="font">
+                   <font>
+                    <family>Adobe Devanagari</family>
+                    <pointsize>12</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>姓名</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLineEdit" name="line_name">
+                  <property name="font">
+                   <font>
+                    <family>Adobe Devanagari</family>
+                    <pointsize>12</pointsize>
+                   </font>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <widget class="QWidget" name="widget_2" native="true">
+               <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,1,1,1">
+                <property name="spacing">
+                 <number>5</number>
+                </property>
+                <property name="leftMargin">
+                 <number>9</number>
+                </property>
+                <property name="topMargin">
+                 <number>9</number>
+                </property>
+                <property name="rightMargin">
+                 <number>9</number>
+                </property>
+                <item>
+                 <widget class="QLabel" name="label_3">
+                  <property name="font">
+                   <font>
+                    <family>Adobe Devanagari</family>
+                    <pointsize>12</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>性别</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QComboBox" name="combo_sex">
+                  <property name="font">
+                   <font>
+                    <family>Adobe Devanagari</family>
+                    <pointsize>12</pointsize>
+                   </font>
+                  </property>
+                  <item>
+                   <property name="text">
+                    <string>男</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>女</string>
+                   </property>
+                  </item>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_4">
+                  <property name="font">
+                   <font>
+                    <family>Adobe Devanagari</family>
+                    <pointsize>12</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>阳/阴历</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QComboBox" name="combo_isSolar">
+                  <property name="font">
+                   <font>
+                    <family>Adobe Devanagari</family>
+                    <pointsize>12</pointsize>
+                   </font>
+                  </property>
+                  <item>
+                   <property name="text">
+                    <string>阳历</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>阴历</string>
+                   </property>
+                  </item>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_7">
+               <property name="font">
+                <font>
+                 <family>Adobe Devanagari</family>
+                 <pointsize>12</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>省/直辖市</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="combo_province">
+               <property name="font">
+                <font>
+                 <family>Adobe Devanagari</family>
+                 <pointsize>12</pointsize>
+                </font>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_8">
+               <property name="font">
+                <font>
+                 <family>Adobe Devanagari</family>
+                 <pointsize>12</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>市</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="combo_city">
+               <property name="font">
+                <font>
+                 <family>Adobe Devanagari</family>
+                 <pointsize>12</pointsize>
+                </font>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_9">
+               <property name="font">
+                <font>
+                 <family>Adobe Devanagari</family>
+                 <pointsize>12</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>区/县</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="combo_county">
+               <property name="font">
+                <font>
+                 <family>Adobe Devanagari</family>
+                 <pointsize>12</pointsize>
+                </font>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_5">
+               <property name="font">
+                <font>
+                 <family>Adobe Devanagari</family>
+                 <pointsize>12</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>出生年月日</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QDateEdit" name="birth_edit">
+               <property name="font">
+                <font>
+                 <family>Adobe Devanagari</family>
+                 <pointsize>12</pointsize>
+                </font>
+               </property>
+               <property name="dateTime">
+                <datetime>
+                 <hour>0</hour>
+                 <minute>0</minute>
+                 <second>0</second>
+                 <year>2000</year>
+                 <month>1</month>
+                 <day>1</day>
+                </datetime>
+               </property>
+               <property name="calendarPopup">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_6">
+               <property name="font">
+                <font>
+                 <family>Adobe Devanagari</family>
+                 <pointsize>12</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>出生时间</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="combo_hour">
+               <property name="font">
+                <font>
+                 <family>Adobe Devanagari</family>
+                 <pointsize>12</pointsize>
+                </font>
+               </property>
+               <item>
+                <property name="text">
+                 <string>00:00:00~00:59:59</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>01:00:00~01:59:59</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>02:00:00~02:59:59</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>03:00:00~03:59:59</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>04:00:00~04:59:59</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>05:00:00~05:59:59</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>06:00:00~06:59:59</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>07:00:00~07:59:59</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>08:00:00~08:59:59</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>09:00:00~09:59:59</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>10:00:00~10:59:59</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>11:00:00~11:59:59</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>12:00:00~12:59:59</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>13:00:00~13:59:59</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>14:00:00~14:59:59</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>15:00:00~15:59:59</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>16:00:00~16:59:59</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>17:00:00~17:59:59</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>18:00:00~18:59:59</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>19:00:00~19:59:59</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>20:00:00~20:59:59</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>21:00:00~21:59:59</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>22:00:00~22:59:59</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>23:00:00~23:59:59</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QWidget" name="widget_11" native="true">
+            <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,8">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QWidget" name="info_widget" native="true">
+               <layout class="QVBoxLayout" name="verticalLayout_3">
+                <item>
+                 <widget class="QWidget" name="widget_3" native="true">
+                  <layout class="QHBoxLayout" name="horizontalLayout_4">
+                   <item>
+                    <widget class="QLabel" name="lb_bazi">
+                     <property name="font">
+                      <font>
+                       <pointsize>12</pointsize>
+                      </font>
+                     </property>
+                     <property name="text">
+                      <string/>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QWidget" name="widget_4" native="true">
+                  <layout class="QHBoxLayout" name="horizontalLayout_3">
+                   <item>
+                    <widget class="QLabel" name="lb_dayun">
+                     <property name="font">
+                      <font>
+                       <pointsize>12</pointsize>
+                      </font>
+                     </property>
+                     <property name="text">
+                      <string/>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="lb_liunian">
+                     <property name="font">
+                      <font>
+                       <pointsize>12</pointsize>
+                      </font>
+                     </property>
+                     <property name="text">
+                      <string/>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="lb_liuyue">
+                     <property name="font">
+                      <font>
+                       <pointsize>12</pointsize>
+                      </font>
+                     </property>
+                     <property name="text">
+                      <string/>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QComboBox" name="combobox_change_fig">
+                     <item>
+                      <property name="text">
+                       <string>雷达图</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>饼图</string>
+                      </property>
+                     </item>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <layout class="QVBoxLayout" name="vbox_radar"/>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QWidget" name="widget_5" native="true">
+         <layout class="QVBoxLayout" name="verticalLayout_5" stretch="1,0,10">
+          <property name="spacing">
+           <number>2</number>
+          </property>
+          <item>
+           <widget class="QWidget" name="widget_6" native="true">
+            <layout class="QHBoxLayout" name="horizontalLayout_5">
+             <item>
+              <widget class="QLabel" name="label_11">
+               <property name="text">
+                <string>年柱：</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="edt_year"/>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_12">
+               <property name="text">
+                <string>月柱：</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="edt_month"/>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_10">
+               <property name="text">
+                <string>日柱：</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="edt_day"/>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_13">
+               <property name="text">
+                <string>时柱：</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="edt_hour"/>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_14">
+               <property name="text">
+                <string>大运：</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="edt_da_yun"/>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_15">
+               <property name="text">
+                <string>流年：</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="edt_liu_nian"/>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_16">
+               <property name="text">
+                <string>流月：</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="edt_liu_yue"/>
+             </item>
+             <item>
+              <widget class="QPushButton" name="btn_change_weights">
+               <property name="text">
+                <string>修改权重</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="lb_weights">
+            <property name="text">
+             <string>当前权重为：</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="hbox_line"/>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <widget class="QWidget" name="widget_9" native="true">
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <item>
+        <widget class="QWidget" name="verticalWidget_4" native="true">
+         <layout class="QVBoxLayout" name="vbox_overview">
+          <item>
+           <widget class="QTableWidget" name="tbl_overview">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <attribute name="horizontalHeaderVisible">
+             <bool>false</bool>
+            </attribute>
+            <attribute name="verticalHeaderVisible">
+             <bool>false</bool>
+            </attribute>
+            <row>
+             <property name="text">
+              <string>新建行</string>
+             </property>
+            </row>
+            <row>
+             <property name="text">
+              <string>新建行</string>
+             </property>
+            </row>
+            <row>
+             <property name="text">
+              <string>新建行</string>
+             </property>
+            </row>
+            <row>
+             <property name="text">
+              <string>新建行</string>
+             </property>
+            </row>
+            <row>
+             <property name="text">
+              <string>新建行</string>
+             </property>
+            </row>
+            <row>
+             <property name="text">
+              <string>新建行</string>
+             </property>
+            </row>
+            <row>
+             <property name="text">
+              <string>新建行</string>
+             </property>
+            </row>
+            <row>
+             <property name="text">
+              <string>新建行</string>
+             </property>
+            </row>
+            <row>
+             <property name="text">
+              <string>新建行</string>
+             </property>
+            </row>
+            <row>
+             <property name="text">
+              <string>新建行</string>
+             </property>
+            </row>
+            <row>
+             <property name="text">
+              <string>新建行</string>
+             </property>
+            </row>
+            <row>
+             <property name="text">
+              <string>新建行</string>
+             </property>
+            </row>
+            <row>
+             <property name="text">
+              <string>新建行</string>
+             </property>
+            </row>
+            <row>
+             <property name="text">
+              <string>新建行</string>
+             </property>
+            </row>
+            <row>
+             <property name="text">
+              <string>新建行</string>
+             </property>
+            </row>
+            <row>
+             <property name="text">
+              <string>新建行</string>
+             </property>
+            </row>
+            <row>
+             <property name="text">
+              <string>新建行</string>
+             </property>
+            </row>
+            <column>
+             <property name="text">
+              <string>新建列</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>新建列</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>新建列</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>新建列</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>新建列</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>新建列</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>新建列</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>新建列</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>新建列</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>新建列</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>新建列</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>新建列</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>新建列</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>新建列</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>新建列</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>新建列</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>新建列</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>新建列</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>新建列</string>
+             </property>
+            </column>
+           </widget>
+          </item>
+          <item>
+           <widget class="QWidget" name="verticalWidget_5" native="true">
+            <layout class="QVBoxLayout" name="vbox_detail" stretch="1,10">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="lb_detail_date">
+               <property name="baseSize">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <pointsize>12</pointsize>
+                </font>
+               </property>
+               <property name="layoutDirection">
+                <enum>Qt::LeftToRight</enum>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QTableWidget" name="tbl_detail">
+               <attribute name="horizontalHeaderVisible">
+                <bool>false</bool>
+               </attribute>
+               <attribute name="verticalHeaderVisible">
+                <bool>false</bool>
+               </attribute>
+               <row>
+                <property name="text">
+                 <string>新建行</string>
+                </property>
+               </row>
+               <row>
+                <property name="text">
+                 <string>一月</string>
+                </property>
+               </row>
+               <row>
+                <property name="text">
+                 <string>二月</string>
+                </property>
+               </row>
+               <row>
+                <property name="text">
+                 <string>三月</string>
+                </property>
+               </row>
+               <row>
+                <property name="text">
+                 <string>四月</string>
+                </property>
+               </row>
+               <row>
+                <property name="text">
+                 <string>五月</string>
+                </property>
+               </row>
+               <row>
+                <property name="text">
+                 <string>六月</string>
+                </property>
+               </row>
+               <row>
+                <property name="text">
+                 <string>七月</string>
+                </property>
+               </row>
+               <row>
+                <property name="text">
+                 <string>八月</string>
+                </property>
+               </row>
+               <row>
+                <property name="text">
+                 <string>九月</string>
+                </property>
+               </row>
+               <row>
+                <property name="text">
+                 <string>十月</string>
+                </property>
+               </row>
+               <row>
+                <property name="text">
+                 <string>十一月</string>
+                </property>
+               </row>
+               <row>
+                <property name="text">
+                 <string>十二月</string>
+                </property>
+               </row>
+               <column>
+                <property name="text">
+                 <string>新建列</string>
+                </property>
+               </column>
+               <column>
+                <property name="text">
+                 <string>大运</string>
+                </property>
+               </column>
+               <column>
+                <property name="text">
+                 <string>流年</string>
+                </property>
+               </column>
+               <column>
+                <property name="text">
+                 <string>流月</string>
+                </property>
+               </column>
+               <column>
+                <property name="text">
+                 <string>金</string>
+                </property>
+               </column>
+               <column>
+                <property name="text">
+                 <string>木</string>
+                </property>
+               </column>
+               <column>
+                <property name="text">
+                 <string>水</string>
+                </property>
+               </column>
+               <column>
+                <property name="text">
+                 <string>火</string>
+                </property>
+               </column>
+               <item row="0" column="1">
+                <property name="text">
+                 <string>大运</string>
+                </property>
+                <property name="textAlignment">
+                 <set>AlignCenter</set>
+                </property>
+               </item>
+               <item row="0" column="2">
+                <property name="text">
+                 <string>流年</string>
+                </property>
+                <property name="textAlignment">
+                 <set>AlignCenter</set>
+                </property>
+               </item>
+               <item row="0" column="3">
+                <property name="text">
+                 <string>流月</string>
+                </property>
+                <property name="textAlignment">
+                 <set>AlignCenter</set>
+                </property>
+               </item>
+               <item row="0" column="4">
+                <property name="text">
+                 <string>金</string>
+                </property>
+                <property name="textAlignment">
+                 <set>AlignCenter</set>
+                </property>
+               </item>
+               <item row="0" column="5">
+                <property name="text">
+                 <string>木</string>
+                </property>
+                <property name="textAlignment">
+                 <set>AlignCenter</set>
+                </property>
+               </item>
+               <item row="0" column="6">
+                <property name="text">
+                 <string>水</string>
+                </property>
+                <property name="textAlignment">
+                 <set>AlignCenter</set>
+                </property>
+               </item>
+               <item row="0" column="7">
+                <property name="text">
+                 <string>火</string>
+                </property>
+                <property name="textAlignment">
+                 <set>AlignCenter</set>
+                </property>
+               </item>
+               <item row="1" column="0">
+                <property name="text">
+                 <string>一月</string>
+                </property>
+                <property name="textAlignment">
+                 <set>AlignCenter</set>
+                </property>
+                <property name="flags">
+                 <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+                </property>
+               </item>
+               <item row="1" column="1">
+                <property name="text">
+                 <string/>
+                </property>
+               </item>
+               <item row="1" column="2">
+                <property name="text">
+                 <string/>
+                </property>
+               </item>
+               <item row="1" column="3">
+                <property name="text">
+                 <string/>
+                </property>
+               </item>
+               <item row="1" column="4">
+                <property name="text">
+                 <string/>
+                </property>
+               </item>
+               <item row="1" column="5">
+                <property name="text">
+                 <string/>
+                </property>
+               </item>
+               <item row="1" column="6">
+                <property name="text">
+                 <string/>
+                </property>
+               </item>
+               <item row="1" column="7">
+                <property name="text">
+                 <string/>
+                </property>
+               </item>
+               <item row="2" column="0">
+                <property name="text">
+                 <string>二月</string>
+                </property>
+                <property name="textAlignment">
+                 <set>AlignCenter</set>
+                </property>
+                <property name="flags">
+                 <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+                </property>
+               </item>
+               <item row="2" column="1">
+                <property name="text">
+                 <string/>
+                </property>
+               </item>
+               <item row="3" column="0">
+                <property name="text">
+                 <string>三月</string>
+                </property>
+                <property name="textAlignment">
+                 <set>AlignCenter</set>
+                </property>
+                <property name="flags">
+                 <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+                </property>
+               </item>
+               <item row="3" column="1">
+                <property name="text">
+                 <string/>
+                </property>
+               </item>
+               <item row="4" column="0">
+                <property name="text">
+                 <string>四月</string>
+                </property>
+                <property name="textAlignment">
+                 <set>AlignCenter</set>
+                </property>
+                <property name="flags">
+                 <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+                </property>
+               </item>
+               <item row="4" column="1">
+                <property name="text">
+                 <string/>
+                </property>
+               </item>
+               <item row="5" column="0">
+                <property name="text">
+                 <string>五月</string>
+                </property>
+                <property name="textAlignment">
+                 <set>AlignCenter</set>
+                </property>
+                <property name="flags">
+                 <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+                </property>
+               </item>
+               <item row="5" column="1">
+                <property name="text">
+                 <string/>
+                </property>
+               </item>
+               <item row="6" column="0">
+                <property name="text">
+                 <string>六月</string>
+                </property>
+                <property name="textAlignment">
+                 <set>AlignCenter</set>
+                </property>
+                <property name="flags">
+                 <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+                </property>
+               </item>
+               <item row="6" column="1">
+                <property name="text">
+                 <string/>
+                </property>
+               </item>
+               <item row="7" column="0">
+                <property name="text">
+                 <string>七月</string>
+                </property>
+                <property name="textAlignment">
+                 <set>AlignCenter</set>
+                </property>
+                <property name="flags">
+                 <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+                </property>
+               </item>
+               <item row="7" column="1">
+                <property name="text">
+                 <string/>
+                </property>
+               </item>
+               <item row="8" column="0">
+                <property name="text">
+                 <string>八月</string>
+                </property>
+                <property name="textAlignment">
+                 <set>AlignCenter</set>
+                </property>
+                <property name="flags">
+                 <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+                </property>
+               </item>
+               <item row="8" column="1">
+                <property name="text">
+                 <string/>
+                </property>
+               </item>
+               <item row="9" column="0">
+                <property name="text">
+                 <string>九月</string>
+                </property>
+                <property name="textAlignment">
+                 <set>AlignCenter</set>
+                </property>
+                <property name="flags">
+                 <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+                </property>
+               </item>
+               <item row="9" column="1">
+                <property name="text">
+                 <string/>
+                </property>
+               </item>
+               <item row="10" column="0">
+                <property name="text">
+                 <string>十月</string>
+                </property>
+                <property name="textAlignment">
+                 <set>AlignCenter</set>
+                </property>
+                <property name="flags">
+                 <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+                </property>
+               </item>
+               <item row="10" column="1">
+                <property name="text">
+                 <string/>
+                </property>
+               </item>
+               <item row="11" column="0">
+                <property name="text">
+                 <string>十一月</string>
+                </property>
+                <property name="textAlignment">
+                 <set>AlignCenter</set>
+                </property>
+                <property name="flags">
+                 <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+                </property>
+               </item>
+               <item row="11" column="1">
+                <property name="text">
+                 <string/>
+                </property>
+               </item>
+               <item row="12" column="0">
+                <property name="text">
+                 <string>十二月</string>
+                </property>
+                <property name="textAlignment">
+                 <set>AlignCenter</set>
+                </property>
+                <property name="flags">
+                 <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+                </property>
+               </item>
+               <item row="12" column="1">
+                <property name="text">
+                 <string/>
+                </property>
+               </item>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
