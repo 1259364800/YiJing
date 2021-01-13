@@ -138,9 +138,9 @@ class RadarFigure(FigureCanvasQTAgg):
         self.figs = Figure(figsize=(width, height), dpi=dpi)
         super(RadarFigure, self).__init__(self.figs)
         self.axes = self.figs.add_subplot(111, polar=True)
+        # self.axes.set_position([0.31, 0.11, 0.5, 0.7], which='both')
         self.di_zhi_lst = ["卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥", "子", "丑", "寅"]
-        # self.initRadar()
-        self.initPie()
+        self.initRadar()
 
     def initRadar(self):
         self.radar_angles = np.linspace(0, 2 * np.pi, 4, endpoint=False)
