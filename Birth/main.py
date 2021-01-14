@@ -45,12 +45,13 @@ class Birth(birth.Ui_MainWindow, QMainWindow):
 
     def afterChange(self):
         self.setBaZi()
-        self.judge()
+        self.birthInfo.getDaYun()
         self.clicked = False
         self.click_year = 0
         self.click_month = 0
         self.drawByFig(self.clicked)
         self.birthInfo.search()
+        self.judge()
         self.refreshOverview()
 
     def setOtherUI(self):
@@ -164,6 +165,8 @@ class Birth(birth.Ui_MainWindow, QMainWindow):
                     spec_str += "反拱 "
                 if year in self.birthInfo.dui_chong.keys():
                     spec_str += "对冲 "
+                if year in self.birthInfo.fu_yin.keys():
+                    spec_str += "复吟"
                 self.tbl_overview.item(7 + j, i * 2 - 1).setText(liu_nian_str)
                 self.tbl_overview.item(7 + j, i * 2).setText(spec_str)
                 self.tbl_overview.item(7 + j, i * 2 - 1).setData(100, (liu_nian[j], yun.getGanZhi()))
@@ -375,7 +378,8 @@ class Birth(birth.Ui_MainWindow, QMainWindow):
 
         spec_data = {"三合": self.birthInfo.san_he,
                      "反拱": self.birthInfo.fan_gong,
-                     "对冲": self.birthInfo.dui_chong}
+                     "对冲": self.birthInfo.dui_chong,
+                     "复吟": self.birthInfo.fu_yin}
         self.line_area.drawLine(dates, jinmu_scores, shuihuo_scores, spec_data)
 
 

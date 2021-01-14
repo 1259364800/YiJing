@@ -18,7 +18,7 @@ score_weights = {"年": 1, "月": 4, "日": 1, "时": 2, "大运": 2, "流年": 
 #   三合
 SAN_HE = [['申', '子', '辰'], ['寅', '午', '戌'], ['亥', '卯', '未'], ['巳', '酉', '丑']]
 #   反拱
-FAN_GONG = [['子', '寅', '戌'], ['午', '申', '辰'], ['卯', '巳', '丑'], ['酉', '亥', '未']]
+FAN_GONG = [['寅', '子', '戌'], ['申', '午', '辰'], ['巳', '卯', '丑'], ['亥', '酉', '未']]
 #   对冲
 DUI_CHONG = [['子', '午'], ['丑', '未'], ['寅', '申'], ['卯', '酉'], ['辰', '戌'], ['巳', '亥']]
 
@@ -79,9 +79,10 @@ def weightSum():
 
 class SearchElm:
 
-    def __init__(self, zhi_dict):
-        self.zhi_dict = zhi_dict.copy()
-        self.values = zhi_dict.values()
+    def __init__(self, zhi_dict=None):
+        if zhi_dict:
+            self.zhi_dict = zhi_dict.copy()
+            self.values = zhi_dict.values()
         self.pat = ""
         self.type = ""
         self.year = 0
@@ -100,12 +101,29 @@ class SearchElm:
         for ch in pat:
             self.pat += ch
 
+    def markLiuYue(self, liu_yue):
+        for yue in liu_yue:
+            month = yue.getIndex() + 1
+            yue_zhi = getZhi(yue.getGanZhi())
+            if self.type == "三合" or self.type == "反拱":
+                mid = self.pat[1]
+                if yue_zhi == mid:
+                    self.month.append(month)
+            elif self.type == "对冲":
+                if yue_zhi == self.combine["流年"]:
+                    self.month.append(month)
+            elif self.type == "复吟":
+                if yue_zhi == getZhi(self.combine["流年"]):
+                    self.month.append(month)
+        self.setDateStr()
+
     def setDateStr(self):
         for m in self.month:
             ds = str(self.year) + '-' + str(m)
             self.date_str.append(ds)
 
 
+#   搜索匹配模板
 def searchPattern(pat_lst, zhi_dict, search_type, year):
     target_pat = None
     for pat in pat_lst:
@@ -127,6 +145,18 @@ def searchPattern(pat_lst, zhi_dict, search_type, year):
         return search_elm
     else:
         return None
+
+
+#   查询复吟
+def searchFuYin(liu_nian_gan_zhi, da_yun_gan_zhi, year):
+    if liu_nian_gan_zhi == da_yun_gan_zhi:
+        elm = SearchElm()
+        elm.year = year
+        elm.type = "复吟"
+        elm.combine["流年"] = liu_nian_gan_zhi
+        elm.combine["大运"] = da_yun_gan_zhi
+        return elm
+    return None
 
 
 class RadarFigure(FigureCanvasQTAgg):
@@ -269,6 +299,8 @@ class LineFigure(FigureCanvasQTAgg):
                 self.axes.scatter(x=dates, y=points, s=70, marker='^', label='反拱')
             elif key == "对冲":
                 self.axes.scatter(x=dates, y=points, s=100, marker='1', label='对冲')
+            elif key == "复吟":
+                self.axes.scatter(x=dates, y=points, s=100, marker='$=$', label='复吟')
 
     def onMousePress(self, event):
         self.press_id = event.button
@@ -405,6 +437,9 @@ class BirthInfo:
     def changeSex(self, sex):
         self.sex = sex
 
+    def getDaYun(self):
+        self.daYun = self.lunar_date.getDayun(self.sex).getDaYun()
+
     def getDateGanZhi(self):
         year_gan_zhi = self.lunar_date.getYearInGanZhi()
         month_gan_zhi = self.lunar_date.getMonthInGanZhi()
@@ -416,6 +451,7 @@ class BirthInfo:
         self.san_he = {}
         self.fan_gong = {}
         self.dui_chong = {}
+        self.fu_yin = {}
         birth_gan_zhi = self.getDateGanZhi()
         zhi_dict = {}
         for key in birth_gan_zhi:
@@ -424,37 +460,33 @@ class BirthInfo:
             if yun.getIndex() == 0:
                 continue
             liu_nian = yun.getLiuNian()
-            yun_zhi = getZhi(yun.getGanZhi())
+            yun_gan_zhi = yun.getGanZhi()
+            yun_zhi = getZhi(yun_gan_zhi)
             zhi_dict["大运"] = yun_zhi
             for nian in liu_nian:
                 year = nian.getYear()
-                liu_nian_zhi = getZhi(nian.getGanZhi())
+                liu_nian_gan_zhi = nian.getGanZhi()
+                liu_nian_zhi = getZhi(liu_nian_gan_zhi)
                 zhi_dict["流年"] = liu_nian_zhi
                 san_he = searchPattern(SAN_HE, zhi_dict, "三合", year)
                 fan_gong = searchPattern(FAN_GONG, zhi_dict, "反拱", year)
                 dui_chong = searchPattern(DUI_CHONG, zhi_dict, "对冲", year)
+                fu_yin = searchFuYin(liu_nian_gan_zhi, yun_gan_zhi, year)
 
                 liu_yue = nian.getLiuYue()
-                for yue in liu_yue:
-                    yue_zhi = getZhi(yue.getGanZhi())
-                    if yue_zhi == liu_nian_zhi:
-                        yue_index = yue.getIndex() + 1
-                        if san_he:
-                            san_he.month.append(yue_index)
-                        if fan_gong:
-                            fan_gong.month.append(yue_index)
-                        if dui_chong:
-                            dui_chong.month.append(yue_index)
 
                 if san_he:
-                    san_he.setDateStr()
+                    san_he.markLiuYue(liu_yue)
                     self.san_he[year] = san_he
                 if fan_gong:
-                    fan_gong.setDateStr()
+                    fan_gong.markLiuYue(liu_yue)
                     self.fan_gong[year] = fan_gong
                 if dui_chong:
-                    dui_chong.setDateStr()
+                    dui_chong.markLiuYue(liu_yue)
                     self.dui_chong[year] = dui_chong
+                if fu_yin:
+                    fu_yin.markLiuYue(liu_yue)
+                    self.fu_yin[year] = fu_yin
 
     def getDaYunGanZhi(self, year, month):
         for yun in self.daYun:
@@ -489,7 +521,6 @@ class BirthInfo:
         birth_zhi = []
         for key in birth_gan_zhi:
             birth_zhi.append(getZhi(birth_gan_zhi[key]))
-        self.daYun = self.lunar_date.getDayun(self.sex).getDaYun()
         dates = []
         fin_jinmu = []
         fin_shuihuo = []
@@ -525,8 +556,6 @@ class BirthInfo:
 
 
 if __name__ == "__main__":
-    a = {"a": 1,
-         "b": 2,
-         "c": 3,
-         "d": 3}
-    print(a.values())
+    a = [1, 1, 1, 1, 1]
+    a.remove(1)
+    print(a)
