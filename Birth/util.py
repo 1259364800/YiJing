@@ -148,15 +148,18 @@ def searchPattern(pat_lst, zhi_dict, search_type, year):
 
 
 #   查询复吟
-def searchFuYin(liu_nian_gan_zhi, da_yun_gan_zhi, year):
-    if liu_nian_gan_zhi == da_yun_gan_zhi:
-        elm = SearchElm()
-        elm.year = year
-        elm.type = "复吟"
+def searchFuYin(liu_nian_gan_zhi, gan_zhi_dict, year):
+    elm = SearchElm()
+    elm.year = year
+    elm.type = "复吟"
+    for key in gan_zhi_dict:
+        if key != "流年" and gan_zhi_dict[key] == liu_nian_gan_zhi:
+            elm.combine[key] = gan_zhi_dict[key]
+    if len(elm.combine) == 0:
+        return None
+    else:
         elm.combine["流年"] = liu_nian_gan_zhi
-        elm.combine["大运"] = da_yun_gan_zhi
         return elm
-    return None
 
 
 class RadarFigure(FigureCanvasQTAgg):
@@ -454,8 +457,10 @@ class BirthInfo:
         self.fu_yin = {}
         birth_gan_zhi = self.getDateGanZhi()
         zhi_dict = {}
+        gan_zhi_dict = {}
         for key in birth_gan_zhi:
             zhi_dict[key] = getZhi(birth_gan_zhi[key])
+            gan_zhi_dict[key] = birth_gan_zhi[key]
         for yun in self.daYun:
             if yun.getIndex() == 0:
                 continue
@@ -463,6 +468,7 @@ class BirthInfo:
             yun_gan_zhi = yun.getGanZhi()
             yun_zhi = getZhi(yun_gan_zhi)
             zhi_dict["大运"] = yun_zhi
+            gan_zhi_dict["大运"] = yun_gan_zhi
             for nian in liu_nian:
                 year = nian.getYear()
                 liu_nian_gan_zhi = nian.getGanZhi()
@@ -471,7 +477,7 @@ class BirthInfo:
                 san_he = searchPattern(SAN_HE, zhi_dict, "三合", year)
                 fan_gong = searchPattern(FAN_GONG, zhi_dict, "反拱", year)
                 dui_chong = searchPattern(DUI_CHONG, zhi_dict, "对冲", year)
-                fu_yin = searchFuYin(liu_nian_gan_zhi, yun_gan_zhi, year)
+                fu_yin = searchFuYin(liu_nian_gan_zhi, gan_zhi_dict, year)
 
                 liu_yue = nian.getLiuYue()
 
