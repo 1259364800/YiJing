@@ -338,6 +338,8 @@ class LineFigure(FigureCanvasQTAgg):
 
     def onScroll(self, event):
         axtemp = event.inaxes
+        if axtemp is None:
+            return
         x_min, x_max = axtemp.get_xlim()
         x_range = (x_max - x_min) / 10
         if event.button == 'up':
