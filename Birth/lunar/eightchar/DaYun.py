@@ -13,6 +13,7 @@ class DaYun:
         self.__yun = yun
         self.__lunar = yun.getLunar()
         self.__index = index
+        self.__base_offset = yun.getBaseOffset()
         birth_year = yun.getLunar().getSolar().getYear()
         year = yun.getStartSolar().getYear()
         if index < 1:
@@ -54,13 +55,27 @@ class DaYun:
         if self.__index < 1:
             return ""
         offset = LunarUtil.getJiaZiIndex(self.__lunar.getMonthInGanZhiExact())
-        offset += self.__index if self.__yun.isForward() else self.__index * -1
+        offset += self.__index if self.__yun.isForward() else -self.__index
         size = len(LunarUtil.JIA_ZI)
         if offset >= size:
             offset -= size
         if offset < 0:
             offset += size
         return LunarUtil.JIA_ZI[offset]
+
+    def getXun(self):
+        """
+        获取所在旬
+        :return: 旬
+        """
+        return LunarUtil.getXun(self.getGanZhi())
+
+    def getXunKong(self):
+        """
+        获取旬空(空亡)
+        :return: 旬空(空亡)
+        """
+        return LunarUtil.getXunKong(self.getGanZhi())
 
     def getLiuNian(self):
 
@@ -89,3 +104,6 @@ class DaYun:
         for i in range(0, n):
             xiao_yun.append(XiaoYun(self, i, self.__yun.isForward()))
         return xiao_yun
+
+    def getBaseOffset(self):
+        return self.__base_offset

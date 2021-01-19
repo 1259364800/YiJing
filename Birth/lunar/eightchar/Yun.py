@@ -18,6 +18,7 @@ class Yun:
         man = 1 == gender
         self.__forward = (yang and man) or (not yang and not man)
         self.__compute_start()
+        self.__base_offset = LunarUtil.getJiaZiIndex(self.__lunar.getJieQiTable()["立春"].getLunar().getYearInGanZhiExact())
 
     def __compute_start(self):
         """
@@ -117,3 +118,6 @@ class Yun:
         for i in range(0, n):
             da_yun.append(DaYun(self, i))
         return da_yun
+
+    def getBaseOffset(self):
+        return self.__base_offset

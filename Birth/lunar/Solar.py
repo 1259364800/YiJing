@@ -67,7 +67,8 @@ class Solar:
         return Solar(year, month, day, 0, 0, 0)
 
     @staticmethod
-    def fromBaZi(yearGanZhi, monthGanZhi, dayGanZhi, timeGanZhi):
+    def fromBaZi(yearGanZhi, monthGanZhi, dayGanZhi, timeGanZhi, sect=2):
+        sect = 1 if 1 == sect else 2
         l = []
         today = Solar.fromDate(datetime.now())
         lunar = today.getLunar()
@@ -76,7 +77,7 @@ class Solar:
             offsetYear = offsetYear + 60
         startYear = today.getYear() - offsetYear
         hour = 0
-        timeZhi = timeGanZhi[int(len(timeGanZhi) / 2):]
+        timeZhi = timeGanZhi[len(timeGanZhi) / 2:]
         for i in range(0, len(LunarUtil.ZHI)):
             if LunarUtil.ZHI[i] == timeZhi:
                 hour = (i - 1) * 2
@@ -112,7 +113,8 @@ class Solar:
                 solar = Solar.fromYmdHms(year, month, day, hour, 0, 0)
                 while counter < 61:
                     lunar = solar.getLunar()
-                    if lunar.getYearInGanZhiExact() == yearGanZhi and lunar.getMonthInGanZhiExact() == monthGanZhi and lunar.getDayInGanZhiExact() == dayGanZhi and lunar.getTimeInGanZhi() == timeGanZhi:
+                    dgz = lunar.getDayInGanZhiExact2() if 2 == sect else lunar.getDayInGanZhiExact()
+                    if lunar.getYearInGanZhiExact() == yearGanZhi and lunar.getMonthInGanZhiExact() == monthGanZhi and dgz == dayGanZhi and lunar.getTimeInGanZhi() == timeGanZhi:
                         l.append(solar)
                         break
                     solar = solar.next(1)
@@ -146,31 +148,29 @@ class Solar:
         获取节日，有可能一天会有多个节日
         :return: 劳动节等
         """
-        l = []
+        festivals = []
         md = str(self.__month) + "-" + str(self.__day)
         if md in SolarUtil.FESTIVAL:
-            l.append(SolarUtil.FESTIVAL[md])
+            festivals.append(SolarUtil.FESTIVAL[md])
+        weeks = int(ceil(self.__day / 7.0))
         week = self.getWeek()
-        weekInMonth = int(ceil((self.__day - week) / 7))
-        if week > 0:
-            weekInMonth += 1
-        me = str(self.__month) + "-" + str(weekInMonth) + "-" + str(week)
+        me = str(self.__month) + "-" + str(weeks) + "-" + str(week)
         if me in SolarUtil.WEEK_FESTIVAL:
-            l.append(SolarUtil.WEEK_FESTIVAL[me])
-        return l
+            festivals.append(SolarUtil.WEEK_FESTIVAL[me])
+        return festivals
 
     def getOtherFestivals(self):
         """
         获取非正式的节日，有可能一天会有多个节日
         :return: 非正式的节日列表，如中元节
         """
-        l = []
+        festivals = []
         md = str(self.__month) + "-" + str(self.__day)
         if md in SolarUtil.OTHER_FESTIVAL:
             fs = SolarUtil.OTHER_FESTIVAL[md]
             for f in fs:
-                l.append(f)
-        return l
+                festivals.append(f)
+        return festivals
 
     def getXingZuo(self):
         """
@@ -178,26 +178,24 @@ class Solar:
         :return: 星座
         """
         index = 11
-        m = self.__month
-        d = self.__day
-        y = m * 100 + d
+        y = self.__month * 100 + self.__day
         if 321 <= y <= 419:
             index = 0
         elif 420 <= y <= 520:
             index = 1
-        elif 521 <= y <= 620:
+        elif 521 <= y <= 621:
             index = 2
-        elif 621 <= y <= 722:
+        elif 622 <= y <= 722:
             index = 3
         elif 723 <= y <= 822:
             index = 4
         elif 823 <= y <= 922:
             index = 5
-        elif 923 <= y <= 1022:
+        elif 923 <= y <= 1023:
             index = 6
-        elif 1023 <= y <= 1121:
+        elif 1024 <= y <= 1122:
             index = 7
-        elif 1122 <= y <= 1221:
+        elif 1123 <= y <= 1221:
             index = 8
         elif y >= 1222 or y <= 119:
             index = 9

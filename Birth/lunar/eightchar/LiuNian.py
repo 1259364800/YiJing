@@ -14,6 +14,7 @@ class LiuNian:
         self.__index = index
         self.__year = da_yun.getStartYear() + index
         self.__age = da_yun.getStartAge() + index
+        self.__base_offset = da_yun.getBaseOffset()
 
     def getIndex(self):
         return self.__index
@@ -29,11 +30,25 @@ class LiuNian:
         获取干支
         :return: 干支
         """
-        offset = LunarUtil.getJiaZiIndex(self.__lunar.getYearInGanZhiExact()) + self.__index
+        offset = self.__base_offset + self.__index
         if self.__daYun.getIndex() > 0:
             offset += self.__daYun.getStartAge() - 1
         offset %= len(LunarUtil.JIA_ZI)
         return LunarUtil.JIA_ZI[offset]
+
+    def getXun(self):
+        """
+        获取所在旬
+        :return: 旬
+        """
+        return LunarUtil.getXun(self.getGanZhi())
+
+    def getXunKong(self):
+        """
+        获取旬空(空亡)
+        :return: 旬空(空亡)
+        """
+        return LunarUtil.getXunKong(self.getGanZhi())
 
     def getLiuYue(self):
         """

@@ -12,11 +12,11 @@ class EightChar:
     CHANG_SHENG = ("长生", "沐浴", "冠带", "临官", "帝旺", "衰", "病", "死", "墓", "绝", "胎", "养")
 
     __CHANG_SHENG_OFFSET = {
-        "甲": 11,
-        "丙": 2,
-        "戊": 2,
-        "庚": 5,
-        "壬": 8,
+        "甲": 1,
+        "丙": 10,
+        "戊": 10,
+        "庚": 7,
+        "壬": 4,
         "乙": 6,
         "丁": 9,
         "己": 9,
@@ -25,6 +25,7 @@ class EightChar:
     }
 
     def __init__(self, lunar):
+        self.__sect = 2
         self.__lunar = lunar
 
     @staticmethod
@@ -36,6 +37,12 @@ class EightChar:
 
     def __str__(self):
         return self.toString()
+
+    def getSect(self):
+        return self.__sect
+
+    def setSect(self, sect):
+        self.__sect = sect
 
     def getYear(self):
         """
@@ -100,9 +107,15 @@ class EightChar:
         """
         return self.__getShiShenZhi(self.getYearZhi())
 
+    def getDayGanIndex(self):
+        return self.__lunar.getDayGanIndexExact2() if 2 == self.__sect else self.__lunar.getDayGanIndexExact()
+
+    def getDayZhiIndex(self):
+        return self.__lunar.getDayZhiIndexExact2() if 2 == self.__sect else self.__lunar.getDayZhiIndexExact()
+
     def __getDiShi(self, zhiIndex):
         offset = self.__CHANG_SHENG_OFFSET.get(self.getDayGan())
-        index = offset + (zhiIndex if self.__lunar.getDayGanIndexExact() % 2 == 0 else zhiIndex)
+        index = offset + (zhiIndex if self.getDayGanIndex() % 2 == 0 else zhiIndex)
         if index >= 12:
             index -= 12
         if index < 0:
@@ -184,21 +197,21 @@ class EightChar:
         获取日柱
         :return: 日柱
         """
-        return self.__lunar.getDayInGanZhiExact()
+        return self.__lunar.getDayInGanZhiExact2() if 2 == self.__sect else self.__lunar.getDayInGanZhiExact()
 
     def getDayGan(self):
         """
         获取日干
         :return: 天干
         """
-        return self.__lunar.getDayGanExact()
+        return self.__lunar.getDayGanExact2() if 2 == self.__sect else self.__lunar.getDayGanExact()
 
     def getDayZhi(self):
         """
         获取日支
         :return: 地支
         """
-        return self.__lunar.getDayZhiExact()
+        return self.__lunar.getDayZhiExact2() if 2 == self.__sect else self.__lunar.getDayZhiExact()
 
     def getDayHideGan(self):
         """
@@ -240,7 +253,7 @@ class EightChar:
         获取日柱地势（长生十二神）
         :return: 地势
         """
-        return self.__getDiShi(self.__lunar.getDayZhiIndexExact())
+        return self.__getDiShi(self.getDayZhiIndex())
 
     def getTime(self):
         """
@@ -398,3 +411,59 @@ class EightChar:
         """
         from .eightchar import Yun
         return Yun(self, gender)
+
+    def getYearXun(self):
+        """
+        获取年柱所在旬
+        :return: 旬
+        """
+        return self.__lunar.getYearXunExact()
+
+    def getYearXunKong(self):
+        """
+        获取年柱旬空(空亡)
+        :return: 旬空(空亡)
+        """
+        return self.__lunar.getYearXunKongExact()
+
+    def getMonthXun(self):
+        """
+        获取月柱所在旬
+        :return: 旬
+        """
+        return self.__lunar.getMonthXunExact()
+
+    def getMonthXunKong(self):
+        """
+        获取月柱旬空(空亡)
+        :return: 旬空(空亡)
+        """
+        return self.__lunar.getMonthXunKongExact()
+
+    def getDayXun(self):
+        """
+        获取日柱所在旬
+        :return: 旬
+        """
+        return self.__lunar.getDayXunExact2() if 2 == self.__sect else self.__lunar.getDayXunExact()
+
+    def getDayXunKong(self):
+        """
+        获取日柱旬空(空亡)
+        :return: 旬空(空亡)
+        """
+        return self.__lunar.getDayXunKongExact2() if 2 == self.__sect else self.__lunar.getDayXunKongExact()
+
+    def getTimeXun(self):
+        """
+        获取时柱所在旬
+        :return: 旬
+        """
+        return self.__lunar.getTimeXun()
+
+    def getTimeXunKong(self):
+        """
+        获取时柱旬空(空亡)
+        :return: 旬空(空亡)
+        """
+        return self.__lunar.getTimeXunKong()

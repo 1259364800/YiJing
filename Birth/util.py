@@ -390,7 +390,7 @@ class BirthInfo:
         self.city = city
         self.sex = sex  # 女：0，男：1
         self.changeSolar(isSolar)
-        self.daYun = self.lunar_date.getDayun(self.sex).getDaYun()
+        self.daYun = self.lunar_date.getDaYun(self.sex).getDaYun()
         self.search()
 
     #   安全性检查
@@ -443,7 +443,7 @@ class BirthInfo:
         self.sex = sex
 
     def getDaYun(self):
-        self.daYun = self.lunar_date.getDayun(self.sex).getDaYun()
+        self.daYun = self.lunar_date.getDaYun(self.sex).getDaYun()
 
     def getDateGanZhi(self):
         year_gan_zhi = self.lunar_date.getYearInGanZhi()

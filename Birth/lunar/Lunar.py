@@ -2,7 +2,7 @@
 from datetime import datetime, timedelta
 from math import cos, sin, floor
 
-from . import Solar, NineStar, EightChar, JieQi
+from . import Solar, NineStar, EightChar, JieQi, ShuJiu, Fu
 from .util import LunarUtil, SolarUtil
 
 
@@ -406,6 +406,9 @@ class Lunar:
         dayGanExact = dayGanIndex
         dayZhiExact = dayZhiIndex
 
+        self.__dayGanIndexExact2 = dayGanExact
+        self.__dayZhiIndexExact2 = dayZhiExact
+
         hm = ("0" if self.__hour < 10 else "") + str(self.__hour) + ":" + ("0" if self.__minute < 10 else "") + str(self.__minute)
         if "23:00" <= hm <= "23:59":
             dayGanExact += 1
@@ -546,17 +549,26 @@ class Lunar:
     def getDayGanExact(self):
         return LunarUtil.GAN[self.__dayGanIndexExact + 1]
 
+    def getDayGanExact2(self):
+        return LunarUtil.GAN[self.__dayGanIndexExact2 + 1]
+
     def getDayZhi(self):
         return LunarUtil.ZHI[self.__dayZhiIndex + 1]
 
     def getDayZhiExact(self):
         return LunarUtil.ZHI[self.__dayZhiIndexExact + 1]
 
+    def getDayZhiExact2(self):
+        return LunarUtil.ZHI[self.__dayZhiIndexExact2 + 1]
+
     def getDayInGanZhi(self):
         return self.getDayGan() + self.getDayZhi()
 
     def getDayInGanZhiExact(self):
         return self.getDayGanExact() + self.getDayZhiExact()
+
+    def getDayInGanZhiExact2(self):
+        return self.getDayGanExact2() + self.getDayZhiExact2()
 
     def getTimeGan(self):
         return LunarUtil.GAN[self.__timeGanIndex + 1]
@@ -851,10 +863,8 @@ class Lunar:
             self.__eightChar = EightChar.fromLunar(self)
         return self.__eightChar
 
-    def getDayun(self, gender):
-        if self.__eightChar is None:
-            self.__eightChar = EightChar.fromLunar(self)
-        return self.__eightChar.getYun(gender)
+    def getDaYun(self, gender):
+        return self.getEightChar().getYun(gender)
 
     def getBaZi(self):
         baZi = self.getEightChar()
@@ -1065,17 +1075,47 @@ class Lunar:
     def getTimeZhiIndex(self):
         return self.__timeZhiIndex
 
+    def getDayGanIndex(self):
+        return self.__dayGanIndex
+
+    def getDayZhiIndex(self):
+        return self.__dayZhiIndex
+
     def getDayGanIndexExact(self):
         return self.__dayGanIndexExact
 
+    def getDayGanIndexExact2(self):
+        return self.__dayGanIndexExact2
+
     def getDayZhiIndexExact(self):
         return self.__dayZhiIndexExact
+
+    def getDayZhiIndexExact2(self):
+        return self.__dayZhiIndexExact2
+
+    def getMonthGanIndex(self):
+        return self.__monthGanIndex
+
+    def getMonthZhiIndex(self):
+        return self.__monthZhiIndex
 
     def getMonthGanIndexExact(self):
         return self.__monthGanIndexExact
 
     def getMonthZhiIndexExact(self):
         return self.__monthZhiIndexExact
+
+    def getYearGanIndex(self):
+        return self.__yearGanIndex
+
+    def getYearZhiIndex(self):
+        return self.__yearZhiIndex
+
+    def getYearGanIndexByLiChun(self):
+        return self.__yearGanIndexByLiChun
+
+    def getYearZhiIndexByLiChun(self):
+        return self.__yearZhiIndexByLiChun
 
     def getYearGanIndexExact(self):
         return self.__yearGanIndexExact
@@ -1197,7 +1237,7 @@ class Lunar:
         :return: 节气对象
         """
         name = self.getJieQi()
-        return JieQi(name, self.__solar) if len(name) > 0 else None
+        return JieQi(name, self.__solar) if name.length() > 0 else None
 
     def getCurrentJie(self):
         """
@@ -1292,3 +1332,184 @@ class Lunar:
         s += " 冲[" + self.getChongDesc() + "]"
         s += " 煞[" + self.getSha() + "]"
         return s
+
+    def getYearXun(self):
+        """
+        获取年所在旬（以正月初一作为新年的开始）
+        :return: 旬
+        """
+        return LunarUtil.getXun(self.getYearInGanZhi())
+
+    def getYearXunByLiChun(self):
+        """
+        获取年所在旬（以立春当天作为新年的开始）
+        :return: 旬
+        """
+        return LunarUtil.getXun(self.getYearInGanZhiByLiChun())
+
+    def getYearXunExact(self):
+        """
+        获取年所在旬（以立春交接时刻作为新年的开始）
+        :return: 旬
+        """
+        return LunarUtil.getXun(self.getYearInGanZhiExact())
+
+    def getYearXunKong(self):
+        """
+        获取值年空亡（以正月初一作为新年的开始）
+        :return: 空亡(旬空)
+        """
+        return LunarUtil.getXunKong(self.getYearInGanZhi())
+
+    def getYearXunKongByLiChun(self):
+        """
+        获取值年空亡（以立春当天作为新年的开始）
+        :return: 空亡(旬空)
+        """
+        return LunarUtil.getXunKong(self.getYearInGanZhiByLiChun())
+
+    def getYearXunKongExact(self):
+        """
+        获取值年空亡（以立春交接时刻作为新年的开始）
+        :return: 空亡(旬空)
+        """
+        return LunarUtil.getXunKong(self.getYearInGanZhiExact())
+
+    def getMonthXun(self):
+        """
+        获取月所在旬（以节交接当天起算）
+        :return: 旬
+        """
+        return LunarUtil.getXun(self.getMonthInGanZhi())
+
+    def getMonthXunExact(self):
+        """
+        获取月所在旬（以节交接时刻起算）
+        :return: 旬
+        """
+        return LunarUtil.getXun(self.getMonthInGanZhiExact())
+
+    def getMonthXunKong(self):
+        """
+        获取值月空亡（以节交接当天起算）
+        :return: 空亡(旬空)
+        """
+        return LunarUtil.getXunKong(self.getMonthInGanZhi())
+
+    def getMonthXunKongExact(self):
+        """
+        获取值月空亡（以节交接时刻起算）
+        :return: 空亡(旬空)
+        """
+        return LunarUtil.getXunKong(self.getMonthInGanZhiExact())
+
+    def getDayXun(self):
+        """
+        获取日所在旬（以节交接当天起算）
+        :return: 旬
+        """
+        return LunarUtil.getXun(self.getDayInGanZhi())
+
+    def getDayXunExact(self):
+        """
+        获取日所在旬（晚子时日柱算明天）
+        :return: 旬
+        """
+        return LunarUtil.getXun(self.getDayInGanZhiExact())
+
+    def getDayXunExact2(self):
+        """
+        获取日所在旬（晚子时日柱算当天）
+        :return: 旬
+        """
+        return LunarUtil.getXun(self.getDayInGanZhiExact2())
+
+    def getDayXunKong(self):
+        """
+        获取值日空亡
+        :return: 空亡(旬空)
+        """
+        return LunarUtil.getXunKong(self.getDayInGanZhi())
+
+    def getDayXunKongExact(self):
+        """
+        获取值日空亡（晚子时日柱算明天）
+        :return: 空亡(旬空)
+        """
+        return LunarUtil.getXunKong(self.getDayInGanZhiExact())
+
+    def getDayXunKongExact2(self):
+        """
+        获取值日空亡（晚子时日柱算当天）
+        :return: 空亡(旬空)
+        """
+        return LunarUtil.getXunKong(self.getDayInGanZhiExact2())
+
+    def getTimeXun(self):
+        """
+        获取时辰所在旬
+        :return: 旬
+        """
+        return LunarUtil.getXun(self.getTimeInGanZhi())
+
+    def getTimeXunKong(self):
+        """
+        获取值时空亡
+        :return: 空亡(旬空)
+        """
+        return LunarUtil.getXunKong(self.getTimeInGanZhi())
+
+    def getShuJiu(self):
+        """
+        获取数九
+        :return: 数九，如果不是数九天，返回None
+        """
+        current_calendar = datetime(self.__solar.getYear(), self.__solar.getMonth(), self.__solar.getDay(), 0, 0, 0, 0)
+        start = self.__jieQi[Lunar.JIE_QI_APPEND]
+        start_calendar = datetime(start.getYear(), start.getMonth(), start.getDay(), 0, 0, 0, 0)
+        if current_calendar < start_calendar:
+            start = self.__jieQi[Lunar.JIE_QI_FIRST]
+            start_calendar = datetime(start.getYear(), start.getMonth(), start.getDay(), 0, 0, 0, 0)
+        end_calendar = start_calendar + timedelta(days=81)
+        if current_calendar < start_calendar or current_calendar >= end_calendar:
+            return None
+        days = (current_calendar - start_calendar).days
+        return ShuJiu(LunarUtil.NUMBER[days / 9 + 1] + "九", days % 9 + 1)
+
+    def getFu(self):
+        """
+        获取三伏
+        :return: 三伏，如果不是伏天，返回None
+        """
+        current_calendar = datetime(self.__solar.getYear(), self.__solar.getMonth(), self.__solar.getDay(), 0, 0, 0, 0)
+        xia_zhi = self.__jieQi["夏至"]
+        li_qiu = self.__jieQi["立秋"]
+        start_calendar = datetime(xia_zhi.getYear(), xia_zhi.getMonth(), xia_zhi.getDay(), 0, 0, 0, 0)
+        add = 6 - xia_zhi.getLunar().getDayGanIndex()
+        if add < 0:
+            add += 10
+        add += 20
+        start_calendar = start_calendar + timedelta(days=add)
+        if current_calendar < start_calendar:
+            return None
+        days = (current_calendar - start_calendar).days
+        if days < 10:
+            return Fu("初伏", days + 1)
+        start_calendar = start_calendar + timedelta(days=10)
+        days = (current_calendar - start_calendar).days
+        if days < 10:
+            return Fu("中伏", days + 1)
+        start_calendar = start_calendar + timedelta(days=10)
+        days = (current_calendar - start_calendar).days
+        li_qiu_calendar = datetime(li_qiu.getYear(), li_qiu.getMonth(), li_qiu.getDay(), 0, 0, 0, 0)
+        if li_qiu_calendar <= start_calendar:
+            if days < 10:
+                return Fu("末伏", days + 1)
+        else:
+            if days < 10:
+                return Fu("中伏", days + 11)
+            start_calendar = start_calendar + timedelta(days=10)
+            days = (current_calendar - start_calendar).days
+            if days < 10:
+                return Fu("末伏", days + 1)
+        return None
