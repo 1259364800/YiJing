@@ -44,10 +44,14 @@ time_zone_data = json.load(f)
 
 
 def getGan(gan_zhi):
+    if len(gan_zhi) == 0:
+        return ""
     return gan_zhi[0]
 
 
 def getZhi(gan_zhi):
+    if len(gan_zhi) == 0:
+        return ""
     return gan_zhi[1]
 
 
@@ -401,7 +405,7 @@ class BirthInfo:
         return False
 
     def clickCheck(self, year):
-        start_year = self.daYun[1].getStartYear()
+        start_year = self.daYun[0].getStartYear()
         end_year = self.daYun[-1].getEndYear()
         if year < start_year or year > end_year:
             return False
@@ -465,9 +469,10 @@ class BirthInfo:
             gan_zhi_dict[key] = birth_gan_zhi[key]
         for yun in self.daYun:
             if yun.getIndex() == 0:
-                continue
+                yun_gan_zhi = ""
+            else:
+                yun_gan_zhi = yun.getGanZhi()
             liu_nian = yun.getLiuNian()
-            yun_gan_zhi = yun.getGanZhi()
             yun_zhi = getZhi(yun_gan_zhi)
             zhi_dict["大运"] = yun_zhi
             gan_zhi_dict["大运"] = yun_gan_zhi
@@ -534,8 +539,9 @@ class BirthInfo:
         fin_shuihuo = []
         for yun in self.daYun:
             if yun.getIndex() == 0:
-                continue
-            yun_zhi = getZhi(yun.getGanZhi())
+                yun_zhi = ""
+            else:
+                yun_zhi = getZhi(yun.getGanZhi())
             liu_nian = yun.getLiuNian()
             for nian in liu_nian:
                 this_nian = nian.getYear()
@@ -564,6 +570,8 @@ class BirthInfo:
 
 
 if __name__ == "__main__":
-    a = [1, 1, 1, 1, 1]
-    a.remove(1)
-    print(a)
+    s = Solar.fromYmdHms(2000, 1, 1, 0, 30, 0)
+    l = s.getLunar()
+    dayun = l.getDaYun(1).getDaYun()
+    for yun in dayun:
+        print("从%d岁开始，干支为%s" % (yun.getStartAge(), yun.getGanZhi()))

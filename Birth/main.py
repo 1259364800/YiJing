@@ -88,7 +88,7 @@ class Birth(birth.Ui_MainWindow, QMainWindow):
         header1 = setHeaderFormat(header1, 12)
         self.tbl_overview.setItem(0, 0, header1)
         #   年月日时，位置为（0,1）
-        self.tbl_overview.setSpan(0, 1, 3, 19)
+        self.tbl_overview.setSpan(0, 1, 3, 21)
         header2 = QTableWidgetItem('年\t月\t日\t时\n')
         header2 = setHeaderFormat(header2, 12)
         self.tbl_overview.setItem(0, 1, header2)
@@ -121,17 +121,17 @@ class Birth(birth.Ui_MainWindow, QMainWindow):
         self.tbl_detail.itemClicked.connect(self.onClickDetail)
 
     def onClickOverview(self, item: QTableWidgetItem):
-        column = item.column()
-        row = item.row()
-        if row >= 7 and column >= 1:
+        data = item.data(100)
+        if data is not None:
             data = item.data(100)
             self.refreshDetail(data)
 
     def onClickDetail(self, item: QTableWidgetItem):
-        row = item.row()
-        if item.text() == "":
+        year_str = self.lb_detail_date.text()
+        if year_str == "":
             return
-        year = int(self.lb_detail_date.text().split("年")[0])
+        row = item.row()
+        year = int(year_str.split("年")[0])
         if row > 0:
             self.clickOnLine("%d-%d" % (year, row))
 
@@ -148,12 +148,24 @@ class Birth(birth.Ui_MainWindow, QMainWindow):
         #   设置大运
         da_yun = self.birthInfo.daYun
         length = len(da_yun)
-        for i in range(1, length):
+
+        self.tbl_overview.item(3, 1).setText("")
+        self.tbl_overview.item(5, 1).setText("")
+        for i in range(0, 10):
+            self.tbl_overview.item(7 + i, 1).setText("")
+            self.tbl_overview.item(7 + i, 1).setData(100, None)
+            self.tbl_overview.item(7 + i, 2).setText("")
+            self.tbl_overview.item(7 + i, 2).setData(100, None)
+        for i in range(0, length):
             yun = da_yun[i]
-            yun_gan_zhi_str = "%s\n10年状态" % yun.getGanZhi()
-            start_year_age = "从%d年\n%d岁开始" % (yun.getStartYear(), yun.getStartAge())
-            self.tbl_overview.item(3, i * 2 - 1).setText(yun_gan_zhi_str)
-            self.tbl_overview.item(5, i * 2 - 1).setText(start_year_age)
+            if i == 0:
+                yun_gan_zhi_str = "从出生开始算起的大运"
+                start_year_age = "从%d年\n%d岁开始" % (yun.getStartYear(), yun.getStartAge())
+            else:
+                yun_gan_zhi_str = "%s\n10年状态" % yun.getGanZhi()
+                start_year_age = "从%d年\n%d岁开始" % (yun.getStartYear(), yun.getStartAge())
+            self.tbl_overview.item(3, i * 2 + 1).setText(yun_gan_zhi_str)
+            self.tbl_overview.item(5, i * 2 + 1).setText(start_year_age)
             liu_nian = yun.getLiuNian()
             for j in range(len(liu_nian)):
                 year = liu_nian[j].getYear()
@@ -167,10 +179,10 @@ class Birth(birth.Ui_MainWindow, QMainWindow):
                     spec_str += "对冲 "
                 if year in self.birthInfo.fu_yin.keys():
                     spec_str += "复吟"
-                self.tbl_overview.item(7 + j, i * 2 - 1).setText(liu_nian_str)
-                self.tbl_overview.item(7 + j, i * 2).setText(spec_str)
-                self.tbl_overview.item(7 + j, i * 2 - 1).setData(100, (liu_nian[j], yun.getGanZhi()))
-                self.tbl_overview.item(7 + j, i * 2).setData(100, (liu_nian[j], yun.getGanZhi()))
+                self.tbl_overview.item(7 + j, i * 2 + 1).setText(liu_nian_str)
+                self.tbl_overview.item(7 + j, i * 2 + 2).setText(spec_str)
+                self.tbl_overview.item(7 + j, i * 2 + 1).setData(100, (liu_nian[j], yun.getGanZhi()))
+                self.tbl_overview.item(7 + j, i * 2 + 2).setData(100, (liu_nian[j], yun.getGanZhi()))
 
     def refreshDetail(self, data):
         liu_nian = data[0]
