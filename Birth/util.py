@@ -395,6 +395,7 @@ class BirthInfo:
         self.sex = sex  # 女：0，男：1
         self.changeSolar(isSolar)
         self.daYun = self.lunar_date.getDaYun(self.sex).getDaYun()
+        self.LYInfo = LYBirth(self.lunar_date)
         self.search()
 
     #   安全性检查
@@ -427,6 +428,8 @@ class BirthInfo:
             self.lunar_date = Lunar.fromYmdHms(self.birth_time.year, self.birth_time.month, self.birth_time.day,
                                                self.birth_time.hour, 0, 0)
             self.solar_date = self.lunar_date.getSolar()
+        if self.LYInfo is not None:
+            self.LYInfo.changeLunar(self.lunar_date)
 
     def changeHour(self, hour):
         self.birth_time.changeHour(hour)
@@ -569,9 +572,76 @@ class BirthInfo:
         return fin_jinmu, fin_shuihuo, dates
 
 
+class LYBirth:
+
+    def __init__(self, origin_lunar: Lunar):
+        self.origin_lunar = origin_lunar
+
+    def changeLunar(self, lunar):
+        self.origin_lunar = lunar
+
+    def getYearGan(self):
+        return self.origin_lunar.getLYYearGan()
+
+    def getYearZhi(self):
+        return self.origin_lunar.getLYYearZhi()
+
+    def getYearInGanZhi(self):
+        return self.origin_lunar.getLYYearInGanZhi()
+
+    def getMonthGan(self):
+        return self.origin_lunar.getLYMonthGan()
+
+    def getMonthZhi(self):
+        return self.origin_lunar.getLYMonthZhi()
+
+    def getMonthInGanZhi(self):
+        return self.origin_lunar.getLYMonthInGanZhi()
+
+    def getDayGan(self):
+        return self.origin_lunar.getLYDayGan()
+
+    def getDayZhi(self):
+        return self.origin_lunar.getLYDayZhi()
+
+    def getDayInGanZhi(self):
+        return self.origin_lunar.getLYDayInGanZhi()
+
+    def getTimeGan(self):
+        return self.origin_lunar.getLYTimeGan()
+
+    def getTimeZhi(self):
+        return self.origin_lunar.getLYTimeZhi()
+
+    def getTimeInGanZhi(self):
+        return self.origin_lunar.getLYTimeInGanZhi()
+
+    def getGanDaYun(self):
+        return self.origin_lunar.getLYGanDaYun()
+
+    def getZhiDaYun(self):
+        return self.origin_lunar.getLYZhiDaYun()
+
+
+
+
 if __name__ == "__main__":
-    s = Solar.fromYmdHms(2000, 1, 1, 0, 30, 0)
+    s = Solar.fromYmdHms(2020, 4, 1, 15, 38, 2)
     l = s.getLunar()
-    dayun = l.getDaYun(1).getDaYun()
-    for yun in dayun:
-        print("从%d岁开始，干支为%s" % (yun.getStartAge(), yun.getGanZhi()))
+    print(l.getPrevJieQi())
+    print(l.getNextJieQi())
+    print(l.getMonthInGanZhi())
+    print(l.getLYMonthInGanZhi())
+    print(l.getDayInGanZhi())
+    print(l.getLYDayInGanZhi())
+    print(l.getTimeInGanZhi())
+    print(l.getLYTimeInGanZhi())
+    a = l.getLYGanDaYun()
+    b = l.getLYZhiDaYun()
+    for i in range(10):
+        print("干：" + a[i].getGan())
+        print("支：" + b[i].getZhi())
+
+    # dayun = l.getDaYun(1).getDaYun()
+    # for yun in dayun:
+    #     print("从%d岁开始，干支为%s" % (yun.getStartAge(), yun.getGanZhi()))
