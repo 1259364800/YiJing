@@ -314,8 +314,8 @@ class Lunar:
         self.__computeDay()
         self.__computeTime()
         self.__computeWeek()
-        self.computeLYDay()
-        self.computeLYTime()
+        # self.computeLYDay()
+        # self.computeLYTime()
 
     def __nutationLon2(self, t):
         t2 = t * t
