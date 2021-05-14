@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1280</width>
-    <height>739</height>
+    <height>743</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -488,12 +488,12 @@
                   <widget class="QComboBox" name="comboSex">
                    <item>
                     <property name="text">
-                     <string>男</string>
+                     <string>女</string>
                     </property>
                    </item>
                    <item>
                     <property name="text">
-                     <string>女</string>
+                     <string>男</string>
                     </property>
                    </item>
                   </widget>
@@ -1044,6 +1044,25 @@ p, li { white-space: pre-wrap; }
                 </layout>
                </widget>
               </item>
+              <item>
+               <widget class="QPushButton" name="btnSave">
+                <property name="minimumSize">
+                 <size>
+                  <width>90</width>
+                  <height>40</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>90</width>
+                  <height>40</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>保存记录</string>
+                </property>
+               </widget>
+              </item>
              </layout>
             </widget>
            </item>
@@ -1062,7 +1081,7 @@ p, li { white-space: pre-wrap; }
                  <property name="geometry">
                   <rect>
                    <x>0</x>
-                   <y>-1250</y>
+                   <y>0</y>
                    <width>784</width>
                    <height>1600</height>
                   </rect>

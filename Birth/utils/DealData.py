@@ -7,12 +7,16 @@ import math
 def getGan(ganZhi):
     if len(ganZhi) == 0:
         return ""
+    elif len(ganZhi) == 1:
+        return ganZhi
     return ganZhi[0]
 
 
 def getZhi(ganZhi):
     if len(ganZhi) == 0:
         return ""
+    elif len(ganZhi) == 1:
+        return ganZhi
     return ganZhi[1]
 
 
@@ -84,9 +88,9 @@ def addDict(dictA, dictB):
 def calculateElemScore(ganZhiDict, numAttribute):
     scores = {}
     if numAttribute == 4:
-        scores = {'金': 0, '木': 0, '水': 0, '火': 0}
+        scores = {'火': 0, '金': 0, '水': 0, '木': 0}
     elif numAttribute == 5:
-        scores = {'金': 0, '木': 0, '水': 0, '火': 0, "土": 0}
+        scores = {'火': 0, '土': 0, '金': 0, '水': 0, "木": 0}
     elemWeights = getWeightsByAttribute(numAttribute)
     elems = getElemsByAttribute(numAttribute)
     for key in elems:
@@ -172,6 +176,14 @@ def dict2List(dictA):
     for key in dictA:
         ret.append(dictA[key])
     return ret
+
+
+def readSpecDataList():
+    return config.SPEC_DATA_LIST
+
+
+def readSpecTypeDataList(specType):
+    return config.SPEC_DATA_LIST[specType]
 
 
 if __name__ == "__main__":

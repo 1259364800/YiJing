@@ -1,5 +1,5 @@
 import sys
-import YiJingWin
+from win import YiJingWin
 from PyQt5.QtWidgets import QApplication
 
 if __name__ == "__main__":

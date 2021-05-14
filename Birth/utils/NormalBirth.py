@@ -47,9 +47,14 @@ class NormalBirth:
         self.wrong = False
         self.useZoneTime = useZoneTime
         self.useTime()
+        self.specData = {}
         self.changeSolar(isSolar)
-        self.getDaYun()
-        self.search()
+
+    def makeSpecDataDict(self):
+        specDataList = DealData.readSpecDataList()
+        self.specData = {}
+        for key in specDataList:
+            self.specData[key] = {}
 
     def useTime(self):
         self.usingTime = self.zoneTime if self.useZoneTime else self.beiJingTime
@@ -90,6 +95,9 @@ class NormalBirth:
             else:
                 self.solarDate = self.lunarDate.getSolar()
                 self.wrong = False
+        self.getDaYun()
+        # self.search()
+        self.anotherSearch()
 
     def changeYear(self, year):
         self.beiJingTime.setYear(year)
@@ -131,6 +139,33 @@ class NormalBirth:
         hourGanZhi = self.lunarDate.getTimeInGanZhi()
         return {"年": yearGanZhi, "月": monthGanZhi, "日": dayGanZhi, "时": hourGanZhi}
 
+    def anotherSearch(self):
+        self.makeSpecDataDict()
+        birthGanZhi = self.getBirthGanZhi()
+        ganZhiDict = {}
+        for key in birthGanZhi:
+            ganZhiDict[key] = birthGanZhi[key]
+
+        index = 0
+        for yun in self.daYun:
+            liuNian = yun.getLiuNian()
+            for nian in liuNian:
+                year = nian.getYear()
+                daYunGanZhi = self.getDaYunGanZhi(year, None, index)
+                for key in daYunGanZhi:
+                    # zhiDict[key] = DealData.getZhi(daYunGanZhi[key])
+                    ganZhiDict[key] = daYunGanZhi[key]
+                for specType in self.specData:
+                    searchRes = Search.searchSpecType(specType, ganZhiDict, year,
+                                                      DealData.readSpecTypeDataList(specType))
+                    if searchRes is not None:
+                        liuYue = nian.getLiuYue()
+                        searchRes.markLiuYue(liuYue)
+                        self.specData[specType][year] = searchRes
+
+            index += 1
+        print('sss')
+
     def search(self):
         self.sanHe = {}
         self.fanGong = {}
@@ -153,6 +188,7 @@ class NormalBirth:
                     zhiDict[key] = DealData.getZhi(daYunGanZhi[key])
                     ganZhiDict[key] = daYunGanZhi[key]
                 liuNianGanZhi = ganZhiDict["流年"]
+
                 sanHe = Search.searchPattern(config.SAN_HE, zhiDict, "三合", year)
                 fanGong = Search.searchPattern(config.FAN_GONG, zhiDict, "反拱", year)
                 duiChong = Search.searchPattern(config.DUI_CHONG, zhiDict, "对冲", year)
@@ -172,6 +208,11 @@ class NormalBirth:
                     fuYin.markLiuYue(liuYue)
                     self.fuYin[year] = fuYin
             index += 1
+
+    def checkFanGong(self):
+        #   反拱必须独立出现
+        # fanGongYears =
+        pass
 
     def getDaYunGanZhi(self, year, month=None, daYunIndex=None):
         if daYunIndex is None:
@@ -222,11 +263,7 @@ class NormalBirth:
 
 
 if __name__ == "__main__":
-    t = Lunar.fromYmdHms(2000, 5, 1, 0, 0, 0)
-    t1 = Lunar.fromYmdHms(2000, 4, 30, 0, 0, 0)
-    s = t.getSolar()
-    s1 = t.getSolar()
-    print(s.toFullString())
-    print(s1.toFullString())
-    print(t1.toFullString())
-
+    a = {"a": 1, "b": 2, "c": 3}
+    b = list(a.values())
+    for i in range(len(b)):
+        print(b[i])
