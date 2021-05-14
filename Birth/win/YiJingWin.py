@@ -32,7 +32,7 @@ class YiJingWin(YiJing.Ui_YiJing, QMainWindow):
         hour = 0
         province = '北京市'
         city = '北京市'
-        self.birthInfo = NormalBirth.NormalBirth(NormalBirth.TimeInfo(2000, 1, 1, hour), True, province, city, 1)
+        self.birthInfo = NormalBirth.NormalBirth(NormalBirth.TimeInfo(2000, 1, 1, hour), True, province, city, 0)
         self.initClick()
         self.initUI()
 
@@ -51,6 +51,7 @@ class YiJingWin(YiJing.Ui_YiJing, QMainWindow):
         self.comboCity.currentIndexChanged.connect(self.changeCity)
         self.comboCounty.currentIndexChanged.connect(self.changeCounty)
         self.comboElems.currentIndexChanged.connect(self.changeElems)
+        self.comboSex.currentIndexChanged.connect(self.changeSex)
         #   radiobutton事件
         self.radBtnBeiJingTime.toggled.connect(self.onBtnBeiJingTime)
         self.radBtnZoneTime.toggled.connect(self.onBtnZoneTime)
@@ -122,18 +123,20 @@ class YiJingWin(YiJing.Ui_YiJing, QMainWindow):
         if data is not None:
             self.clickYear = data[0].getYear()
             self.refreshDetail(data)
+            nianGanZhi = data[0].getGanZhi()
+            self.labelDaYun.setText("%s、%s、%s" % (data[1], nianGanZhi, ""))
 
     def onClickDetail(self, item: QTableWidgetItem):
         row = item.row()
         year = self.clickYear
         if row > 0:
             self.clickMonth = row
-            self.clickOnLine("%d-%d" % (year, row))
+            self.clickOnLine1("%d-%d" % (year, row))
 
     def clickOnLine(self, time):
         try:
             year, month = time.split('-')
-        except Exception:
+        except  Exception:
             return
         year = int(year)
         month = int(month)
@@ -198,14 +201,9 @@ class YiJingWin(YiJing.Ui_YiJing, QMainWindow):
                 year = liuNian[j].getYear()
                 liuNianStr = "%d %s" % (liuNian[j].getYear(), liuNian[j].getGanZhi())
                 specStr = ""
-                if year in self.birthInfo.sanHe.keys():
-                    specStr += "三合 "
-                if year in self.birthInfo.fanGong.keys():
-                    specStr += "反拱 "
-                if year in self.birthInfo.duiChong.keys():
-                    specStr += "对冲 "
-                if year in self.birthInfo.fuYin.keys():
-                    specStr += "复吟"
+                for specType in self.birthInfo.specData:
+                    if year in self.birthInfo.specData[specType].keys():
+                        specStr = specStr + specType + " "
                 self.tblOverview.item(7 + j, i * 2 + 1).setText(liuNianStr)
                 self.tblOverview.item(7 + j, i * 2 + 2).setText(specStr)
                 self.tblOverview.item(7 + j, i * 2 + 1).setData(100, (liuNian[j], yun.getGanZhi()))
@@ -322,10 +320,7 @@ class YiJingWin(YiJing.Ui_YiJing, QMainWindow):
         numAttributes = self.getNumAttributes()
         scoreDict, dates = self.birthInfo.calculateLineScore(numAttributes)
         dates = DealData.formatDateTime(dates)
-        specPoints = {
-            "三合": self.birthInfo.sanHe, "反拱": self.birthInfo.fanGong,
-            "对冲": self.birthInfo.duiChong, "复吟": self.birthInfo.fuYin
-        }
+        specPoints = self.birthInfo.specData
         self.lineArea.drawLines(dates, scoreDict, specPoints, numAttributes)
 
     def onBtnReset(self):
@@ -382,6 +377,10 @@ class YiJingWin(YiJing.Ui_YiJing, QMainWindow):
 
     def changeElems(self):
         self.showWeights()
+
+    def changeSex(self):
+        index = self.sender().currentIndex()
+        self.birthInfo.changeSex(index)
 
     def onBtnBeiJingTime(self):
         if self.sender().isChecked():

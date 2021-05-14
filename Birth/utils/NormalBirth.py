@@ -96,8 +96,7 @@ class NormalBirth:
                 self.solarDate = self.lunarDate.getSolar()
                 self.wrong = False
         self.getDaYun()
-        # self.search()
-        self.anotherSearch()
+        self.search()
 
     def changeYear(self, year):
         self.beiJingTime.setYear(year)
@@ -128,6 +127,7 @@ class NormalBirth:
 
     def changeSex(self, sex):
         self.sex = sex
+        self.changeDateTime()
 
     def getDaYun(self):
         self.daYun = self.lunarDate.getDaYun(self.sex).getDaYun()
@@ -139,7 +139,7 @@ class NormalBirth:
         hourGanZhi = self.lunarDate.getTimeInGanZhi()
         return {"年": yearGanZhi, "月": monthGanZhi, "日": dayGanZhi, "时": hourGanZhi}
 
-    def anotherSearch(self):
+    def search(self):
         self.makeSpecDataDict()
         birthGanZhi = self.getBirthGanZhi()
         ganZhiDict = {}
@@ -162,57 +162,22 @@ class NormalBirth:
                         liuYue = nian.getLiuYue()
                         searchRes.markLiuYue(liuYue)
                         self.specData[specType][year] = searchRes
-
             index += 1
-        print('sss')
-
-    def search(self):
-        self.sanHe = {}
-        self.fanGong = {}
-        self.duiChong = {}
-        self.fuYin = {}
-        birthGanZhi = self.getBirthGanZhi()
-        zhiDict = {}
-        ganZhiDict = {}
-        for key in birthGanZhi:
-            zhiDict[key] = DealData.getZhi(birthGanZhi[key])
-            ganZhiDict[key] = birthGanZhi[key]
-
-        index = 0
-        for yun in self.daYun:
-            liuNian = yun.getLiuNian()
-            for nian in liuNian:
-                year = nian.getYear()
-                daYunGanZhi = self.getDaYunGanZhi(year, None, index)
-                for key in daYunGanZhi:
-                    zhiDict[key] = DealData.getZhi(daYunGanZhi[key])
-                    ganZhiDict[key] = daYunGanZhi[key]
-                liuNianGanZhi = ganZhiDict["流年"]
-
-                sanHe = Search.searchPattern(config.SAN_HE, zhiDict, "三合", year)
-                fanGong = Search.searchPattern(config.FAN_GONG, zhiDict, "反拱", year)
-                duiChong = Search.searchPattern(config.DUI_CHONG, zhiDict, "对冲", year)
-                fuYin = Search.searchFuYin(liuNianGanZhi, ganZhiDict, year)
-
-                liuYue = nian.getLiuYue()
-                if sanHe:
-                    sanHe.markLiuYue(liuYue)
-                    self.sanHe[year] = sanHe
-                if fanGong:
-                    fanGong.markLiuYue(liuYue)
-                    self.fanGong[year] = fanGong
-                if duiChong:
-                    duiChong.markLiuYue(liuYue)
-                    self.duiChong[year] = duiChong
-                if fuYin:
-                    fuYin.markLiuYue(liuYue)
-                    self.fuYin[year] = fuYin
-            index += 1
+        self.checkFanGong()
 
     def checkFanGong(self):
         #   反拱必须独立出现
-        # fanGongYears =
-        pass
+        fanGongYears = list(self.specData["反拱"].keys())
+        for year in fanGongYears:
+            mid = self.specData["反拱"][year].pat[1]
+            for specType in self.specData:
+                if specType != "反拱":
+                    specYears = list(self.specData[specType].keys())
+                    if year in specYears:
+                        pat = self.specData[specType][year].pat
+                        if mid in pat:
+                            self.specData["反拱"].pop(year)
+                            continue
 
     def getDaYunGanZhi(self, year, month=None, daYunIndex=None):
         if daYunIndex is None:
@@ -264,6 +229,6 @@ class NormalBirth:
 
 if __name__ == "__main__":
     a = {"a": 1, "b": 2, "c": 3}
-    b = list(a.values())
-    for i in range(len(b)):
-        print(b[i])
+    # a.pop("c")
+    # print(a)
+
