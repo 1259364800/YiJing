@@ -1,8 +1,10 @@
 from ui_codes import YiJing
-from utils import DealData, DrawLines, DrawPie, DrawRadar, NormalBirth
+from utils import DealData, DrawLines, DrawPie, DrawRadar, NormalBirth, DealSql
+from win import RecordTab
 
-from PyQt5.QtWidgets import QMainWindow, QMessageBox, QTableWidgetItem, QAbstractItemView, QWidget
+from PyQt5.QtWidgets import QMainWindow, QMessageBox, QTableWidgetItem, QAbstractItemView, QHeaderView
 from PyQt5.QtCore import Qt
+from datetime import datetime
 
 
 #   调整header的一些格式
@@ -34,28 +36,12 @@ class YiJingWin(YiJing.Ui_YiJing, QMainWindow):
         self.initClick()
         self.initUI()
 
-    def initUI(self):
-        #   绘图控件
-        self.lineArea = DrawLines.DrawLines(callback=self.clickOnLine)
-        self.radarArea = DrawRadar.DrawRadar()
-        self.pieArea = DrawPie.DrawPie()
-        self.boxLines.addWidget(self.lineArea)
-        self.boxRadar.addWidget(self.radarArea)
-        self.boxPie.addWidget(self.pieArea)
-        #   初始化表格
-        self.initTableView()
-        #   添加省份信息
-        provinces = DealData.getProvinceInfo()
-        for province in provinces:
-            self.comboProvince.addItem(province)
-
-        self.showWeights()
-
     def initClick(self):
         #   pushbutton事件
         self.btnChangeWeight.clicked.connect(self.onBtnChangeWeight)
         self.btnCalculate.clicked.connect(self.onBtnCalculate)
         self.btnReset.clicked.connect(self.onBtnReset)
+        self.btnSave.clicked.connect(self.onBtnSave)
         #   combobox事件
         self.spinYear.valueChanged.connect(self.changeYear)
         self.comboMonth.currentIndexChanged.connect(self.changeMonth)
@@ -70,6 +56,24 @@ class YiJingWin(YiJing.Ui_YiJing, QMainWindow):
         self.radBtnZoneTime.toggled.connect(self.onBtnZoneTime)
         self.radBtnSolar.toggled.connect(self.onBtnSolar)
         self.radBtnLunar.toggled.connect(self.onBtnLunar)
+
+    def initUI(self):
+        #
+        self.tabWidget.addTab(RecordTab.RecordTab(self.loadSqlCallback), "读取")
+        #   绘图控件
+        self.lineArea = DrawLines.DrawLines(callback=self.clickOnLine)
+        self.radarArea = DrawRadar.DrawRadar()
+        self.pieArea = DrawPie.DrawPie()
+        self.boxLines.addWidget(self.lineArea)
+        self.boxRadar.addWidget(self.radarArea)
+        self.boxPie.addWidget(self.pieArea)
+        #   初始化表格
+        self.initTableView()
+        #   添加省份信息
+        provinces = DealData.getProvinceInfo()
+        for province in provinces:
+            self.comboProvince.addItem(province)
+        self.showWeights()
 
     def initTableView(self):
         #   禁止编辑
@@ -258,6 +262,40 @@ class YiJingWin(YiJing.Ui_YiJing, QMainWindow):
         self.drawRadar(False)
         self.drawPie()
         self.drawLine()
+
+    def onBtnSave(self):
+        name = self.editName.toPlainText()
+        if name.strip('\n') == '':
+            QMessageBox.information(self, "错误", "未输入姓名！", QMessageBox.Ok)
+            return
+        curTime = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        sex = self.birthInfo.sex
+        birth = self.birthInfo.beiJingTime
+        birthTime = datetime(birth.year, birth.month, birth.day, birth.hour, 0, 0).strftime('%Y-%m-%d %H:%M:%S')
+
+        sqlOp = DealSql.SqlOp('./data/data.db')
+        sqlOp.connect()
+        insert = "INSERT INTO base_info VALUES ('%s', '%s', '%s', %d)" % (curTime, birthTime, name, sex)
+        sqlOp.execNonQuery(insert)
+        sqlOp.closeDB()
+        QMessageBox.information(self, "提示", "保存成功！", QMessageBox.Ok)
+
+    def loadSqlCallback(self, info):
+        self.tabWidget.setCurrentIndex(0)
+        birthDate = datetime.strptime(info[1], "%Y-%m-%d %H:%M:%S")
+        year = birthDate.year
+        month = birthDate.month
+        day = birthDate.day
+        hour = birthDate.hour
+        self.spinYear.setValue(year)
+        self.comboMonth.setCurrentIndex(month - 1)
+        self.comboDay.setCurrentIndex(day - 1)
+        self.comboTime.setCurrentIndex(hour)
+        self.comboSex.setCurrentIndex(info[3])
+        self.radBtnLunar.setChecked(False)
+        self.radBtnSolar.setChecked(True)
+        self.editName.setText(info[2])
+        self.onBtnCalculate()
 
     def drawRadar(self, drawDaYun=False):
         numAttributes = self.getNumAttributes()

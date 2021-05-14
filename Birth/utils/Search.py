@@ -3,10 +3,13 @@ from utils import DealData
 
 class SearchElm:
 
-    def __init__(self, zhiDict=None):
-        if zhiDict:
-            self.zhiDict = zhiDict.copy()
-            self.values = zhiDict.values()
+    def __init__(self, ganZhiDict=None):
+        if ganZhiDict:
+            self.ganZhiDict = ganZhiDict.copy()
+            self.values = list(ganZhiDict.values())
+            for i in range(len(self.values)):
+                self.values[i] = DealData.getZhi(self.values[i])
+
         self.pat = ""
         self.type = ""
         self.year = 0
@@ -33,10 +36,7 @@ class SearchElm:
                 mid = self.pat[1]
                 if yueZhi == mid:
                     self.month.append(month)
-            elif self.type == "对冲":
-                if yueZhi == self.combine["流年"]:
-                    self.month.append(month)
-            elif self.type == "复吟":
+            elif self.type == "对冲" or self.type == "复吟":
                 if yueZhi == DealData.getZhi(self.combine["流年"]):
                     self.month.append(month)
         self.setDateStr()
@@ -47,23 +47,30 @@ class SearchElm:
             self.dateStr.append(ds)
 
 
-def searchPattern(patList, zhiDict, searchType, year):
+def searchSpecType(searchType, *args):
+    if searchType == "复吟":
+        return searchFuYin(*args)
+    else:
+        return searchPattern(searchType, *args)
+
+
+def searchPattern(searchType, ganZhiDict, year, patList):
     targetPat = None
     for pat in patList:
-        if zhiDict['流年'] in pat:
+        if DealData.getZhi(ganZhiDict['流年']) in pat:
             targetPat = pat.copy()
             break
     if targetPat is None:
         return None
-    searchElm = SearchElm(zhiDict)
+    searchElm = SearchElm(ganZhiDict)
     searchElm.setPattern(targetPat)
-    targetPat.remove(zhiDict['流年'])
+    targetPat.remove(DealData.getZhi(ganZhiDict['流年']))
     if set(targetPat).issubset(set(searchElm.values)):
-        searchElm.combine["流年"] = zhiDict["流年"]
+        searchElm.combine["流年"] = DealData.getZhi(ganZhiDict["流年"])
         searchElm.year = year
-        for key in zhiDict:
-            if zhiDict[key] in targetPat:
-                searchElm.combine[key] = zhiDict[key]
+        for key in ganZhiDict:
+            if DealData.getZhi(ganZhiDict[key]) in targetPat:
+                searchElm.combine[key] = DealData.getZhi(ganZhiDict[key])
         searchElm.type = searchType
         return searchElm
     else:
@@ -71,10 +78,11 @@ def searchPattern(patList, zhiDict, searchType, year):
 
 
 #   查询复吟
-def searchFuYin(liuNianGanZhi, ganZhiDict, year):
+def searchFuYin(ganZhiDict, year, patList):
     elm = SearchElm()
     elm.year = year
     elm.type = "复吟"
+    liuNianGanZhi = ganZhiDict["流年"]
     for key in ganZhiDict:
         if key != "流年" and ganZhiDict[key] == liuNianGanZhi:
             elm.combine[key] = ganZhiDict[key]

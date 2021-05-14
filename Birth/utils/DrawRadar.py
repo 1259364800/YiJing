@@ -25,10 +25,10 @@ class DrawRadar(FigureCanvasQTAgg):
         self.axes.set_theta_zero_location('N')
         if numAttribute == 4:
             self.radarAngles = np.concatenate((self.radarAngles, [self.radarAngles[0]]))
-            self.axes.set_thetagrids(self.radarAngles * 180 / np.pi, ['金', '木', '水', '火'])
+            self.axes.set_thetagrids(self.radarAngles * 180 / np.pi, ['火', '金', '水', '木'])
         elif numAttribute == 5:
             self.radarAngles = np.concatenate((self.radarAngles, [self.radarAngles[0]]))
-            self.axes.set_thetagrids(self.radarAngles * 180 / np.pi, ['金', '木', '水', '火', '土'])
+            self.axes.set_thetagrids(self.radarAngles * 180 / np.pi, ['火', '土', '金', '水', '木'])
         ticks = [i*avgWeight*10 for i in range(numAttribute+1)]
         self.axes.set_yticks(ticks)
         self.axes.tick_params('y', labelleft=False)
