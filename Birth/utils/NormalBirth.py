@@ -177,7 +177,7 @@ class NormalBirth:
                         pat = self.specData[specType][year].pat
                         if mid in pat:
                             self.specData["反拱"].pop(year)
-                            continue
+                            break
 
     def getDaYunGanZhi(self, year, month=None, daYunIndex=None):
         if daYunIndex is None:
