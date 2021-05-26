@@ -127,11 +127,13 @@ class YiJingWin(YiJing.Ui_YiJing, QMainWindow):
             self.labelDaYun.setText("%s、%s、%s" % (data[1], nianGanZhi, ""))
 
     def onClickDetail(self, item: QTableWidgetItem):
+        if self.clickYear == 0:
+            return
         row = item.row()
         year = self.clickYear
         if row > 0:
             self.clickMonth = row
-            self.clickOnLine1("%d-%d" % (year, row))
+            self.clickOnLine("%d-%d" % (year, row))
 
     def clickOnLine(self, time):
         try:
