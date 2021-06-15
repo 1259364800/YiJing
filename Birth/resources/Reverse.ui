@@ -1,0 +1,835 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1274</width>
+    <height>673</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <item>
+    <widget class="QWidget" name="reverseCentralWidget" native="true">
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QWidget" name="widget_2" native="true">
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <item>
+          <widget class="QWidget" name="widget" native="true">
+           <layout class="QVBoxLayout" name="verticalLayout_2">
+            <item>
+             <layout class="QGridLayout" name="gridLayout">
+              <item row="4" column="2">
+               <widget class="QComboBox" name="comboHourZhi">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>69</width>
+                  <height>22</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>69</width>
+                  <height>22</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>12</pointsize>
+                 </font>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>子</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>丑</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>寅</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>卯</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>辰</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>巳</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>午</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>未</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>申</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>酉</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>戌</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>亥</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item row="3" column="2">
+               <widget class="QComboBox" name="comboDayZhi">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>69</width>
+                  <height>22</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>69</width>
+                  <height>22</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>12</pointsize>
+                 </font>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>子</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>丑</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>寅</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>卯</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>辰</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>巳</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>午</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>未</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>申</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>酉</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>戌</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>亥</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QLabel" name="label_3">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>54</width>
+                  <height>16</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>54</width>
+                  <height>16</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>12</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>日期</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QComboBox" name="comboDayGan">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>69</width>
+                  <height>22</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>69</width>
+                  <height>22</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>12</pointsize>
+                 </font>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>甲</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>乙</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>丙</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>丁</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>戊</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>己</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>庚</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>辛</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>壬</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>癸</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item row="5" column="2">
+               <widget class="QPushButton" name="btnShowFigure">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>80</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>80</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>12</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>展示图表</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QLabel" name="label_5">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>75</width>
+                  <height>16</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>75</width>
+                  <height>16</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>12</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>年份/天干</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="label">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>54</width>
+                  <height>16</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>54</width>
+                  <height>16</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>12</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>年份</string>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="0">
+               <widget class="QLabel" name="label_4">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>54</width>
+                  <height>16</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>54</width>
+                  <height>16</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>12</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>时辰</string>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="1" colspan="2">
+               <widget class="QLabel" name="lbResult">
+                <property name="minimumSize">
+                 <size>
+                  <width>221</width>
+                  <height>25</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>25</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>12</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="1">
+               <widget class="QComboBox" name="comboMonthGan">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>69</width>
+                  <height>22</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>69</width>
+                  <height>22</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>12</pointsize>
+                 </font>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>甲</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>乙</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>丙</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>丁</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>戊</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>己</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>庚</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>辛</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>壬</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>癸</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item row="2" column="2">
+               <widget class="QComboBox" name="comboMonthZhi">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>69</width>
+                  <height>22</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>69</width>
+                  <height>22</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>12</pointsize>
+                 </font>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>子</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>丑</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>寅</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>卯</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>辰</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>巳</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>午</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>未</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>申</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>酉</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>戌</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>亥</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="label_2">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>54</width>
+                  <height>16</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>54</width>
+                  <height>16</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>12</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>月份</string>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="1">
+               <widget class="QPushButton" name="btnReverse">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>80</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>80</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>12</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>倒推</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QSpinBox" name="spinBoxYear">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>60</width>
+                  <height>22</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>60</width>
+                  <height>22</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>12</pointsize>
+                 </font>
+                </property>
+                <property name="minimum">
+                 <number>1900</number>
+                </property>
+                <property name="maximum">
+                 <number>2100</number>
+                </property>
+                <property name="value">
+                 <number>2000</number>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="1">
+               <widget class="QComboBox" name="comboHourGan">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>69</width>
+                  <height>22</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>69</width>
+                  <height>22</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>12</pointsize>
+                 </font>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>甲</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>乙</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>丙</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>丁</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>戊</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>己</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>庚</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>辛</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>壬</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>癸</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item row="0" column="2">
+               <widget class="QLabel" name="label_6">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>54</width>
+                  <height>16</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>12</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>地支</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

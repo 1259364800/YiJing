@@ -1,6 +1,6 @@
 from ui_codes import YiJing
 from utils import DealData, DrawLines, DrawPie, DrawRadar, NormalBirth, DealSql
-from win import RecordTab
+from win import RecordTab, ReverseTab
 
 from PyQt5.QtWidgets import QMainWindow, QMessageBox, QTableWidgetItem, QAbstractItemView, QHeaderView
 from PyQt5.QtCore import Qt
@@ -61,6 +61,7 @@ class YiJingWin(YiJing.Ui_YiJing, QMainWindow):
     def initUI(self):
         #
         self.tabWidget.addTab(RecordTab.RecordTab(self.loadSqlCallback), "读取")
+        self.tabWidget.addTab(ReverseTab.ReverseTab(self.reverseCallback), "倒推")
         #   绘图控件
         self.lineArea = DrawLines.DrawLines(callback=self.clickOnLine)
         self.radarArea = DrawRadar.DrawRadar()
@@ -287,14 +288,21 @@ class YiJingWin(YiJing.Ui_YiJing, QMainWindow):
         month = birthDate.month
         day = birthDate.day
         hour = birthDate.hour
+        self.setTimeAndRefresh(year, month, day, hour, info[3], info[2])
+
+    def reverseCallback(self, year, month, day, hour):
+        self.tabWidget.setCurrentIndex(0)
+        self.setTimeAndRefresh(year, month, day, hour)
+
+    def setTimeAndRefresh(self, year, month, day, hour, sex=0, name=""):
         self.spinYear.setValue(year)
         self.comboMonth.setCurrentIndex(month - 1)
         self.comboDay.setCurrentIndex(day - 1)
         self.comboTime.setCurrentIndex(hour)
-        self.comboSex.setCurrentIndex(info[3])
+        self.comboSex.setCurrentIndex(sex)
+        self.editName.setText(name)
         self.radBtnLunar.setChecked(False)
         self.radBtnSolar.setChecked(True)
-        self.editName.setText(info[2])
         self.onBtnCalculate()
 
     def drawRadar(self, drawDaYun=False):

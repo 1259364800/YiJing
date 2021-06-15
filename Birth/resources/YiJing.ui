@@ -370,6 +370,11 @@
                    </item>
                    <item>
                     <property name="text">
+                     <string>12:00~12:59</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
                      <string>13:00~13:59</string>
                     </property>
                    </item>
@@ -1081,7 +1086,7 @@ p, li { white-space: pre-wrap; }
                  <property name="geometry">
                   <rect>
                    <x>0</x>
-                   <y>-1351</y>
+                   <y>0</y>
                    <width>784</width>
                    <height>1700</height>
                   </rect>
